@@ -25,7 +25,7 @@ sequelize.initDb();
 
 //Points de terminaisons pour les utilisateurs
 require("./src/routes/user/login.js")(app);
-require("./src/routes/user/register.js")(app);
+require("./src/routes/user/createUser.js")(app);
 require("./src/routes/user/findAllUsers.js")(app);
 require("./src/routes/user/findOneUser.js")(app);
 require("./src/routes/user/deleteOneUser.js")(app);
