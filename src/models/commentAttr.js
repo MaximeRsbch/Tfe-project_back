@@ -1,18 +1,18 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    "Review",
+    "CommentAttraction",
     {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      rating: {
-        type: DataTypes.INTEGER,
+      content: {
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: {
-            msg: "Le rating ne peut pas être vide.",
+            msg: "Le contenu ne peut pas être vide.",
           },
         },
       },

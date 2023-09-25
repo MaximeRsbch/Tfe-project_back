@@ -1,7 +1,7 @@
-const { Comment } = require("../../db/sequelize.js");
+const { CommentAttr, User } = require("../../db/sequelize.js");
 
 exports.deleteOneComment = (req, res, next) => {
-  Comment.destroy({
+  CommentAttr.destroy({
     where: {
       id: req.params.id,
     },
@@ -18,7 +18,7 @@ exports.deleteOneComment = (req, res, next) => {
 };
 
 exports.findAllComments = (req, res, next) => {
-  Comment.findAll()
+  CommentAttr.findAll()
     .then((comments) => {
       const message = "La liste des commentaires a bien été récupérée";
       return res.json({ message, data: comments });
@@ -31,15 +31,28 @@ exports.findAllComments = (req, res, next) => {
 };
 
 exports.writeCommment = (req, res, next) => {
-  Comment.create({
-    content: req.body.content,
-    canComment: true,
-  })
-    .then((comment) => {
-      res.json(comment);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
+  const content = req.body.content;
+  const ref_user = req.body.ref_user;
+  const ref_attraction = req.body.ref_article;
+
+  User.findOne({
+    id: ref_user,
+  }).then((user) => {
+    if (user.canComment === true) {
+      CommentAttr.create({
+        content: content,
+        ref_user: ref_user,
+        ref_article: ref_attraction,
+      })
+        .then((comment) => {
+          res.status(201).json(comment);
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(500).json(err);
+        });
+    } else {
+      res.status(500).json({ message: "Vous ne pouvez pas commenter" });
+    }
+  });
 };

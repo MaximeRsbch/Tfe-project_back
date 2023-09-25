@@ -10,7 +10,7 @@ const port = 3000;
 const queuetimeRouter = require("./src/router/queuetimeRouter.js");
 const mapboxRouter = require("./src/router/mapboxRouter.js");
 const authRouter = require("./src/router/authRouter.js");
-const commentRouter = require("./src/router/commentRouter.js");
+const commentRouter = require("./src/router/commentArticlesRouter.js");
 const usersRouter = require("./src/router/usersRouter.js");
 
 app.use(morgan("dev"));
@@ -26,7 +26,7 @@ const corsConf = {
 app
   .use(bodyParser.json())
   .use(cors(corsConf))
-  .use("/api/queuetime", queuetimeRouter)
+  .use("/api/queuetime", queuetime&&Router)
   .use("/api/mapbox", mapboxRouter)
   .use("/api/auth", authRouter)
   .use("/api/comments", commentRouter)

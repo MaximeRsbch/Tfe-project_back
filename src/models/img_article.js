@@ -19,11 +19,6 @@ module.exports = (sequelize, DataTypes) => {
       ref_article: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        validate: {
-          notEmpty: {
-            msg: "L'url de l'image ne peut pas être vide.",
-          },
-        },
       },
     },
     {

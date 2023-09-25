@@ -1,4 +1,4 @@
-const { Articles, ImgArticle } = require("../db/sequelize.js");
+const { Articles, ImgArticle, Comment } = require("../db/sequelize.js");
 
 exports.createArticle = (req, res, next) => {
   let imagePath = null;
@@ -17,8 +17,25 @@ exports.createArticle = (req, res, next) => {
 
     Articles.create(article)
       .then((article) => {
-        const message = "L'article a été créé avec succès";
-        return res.json({ message, data: article });
+        if (imagePath) {
+          const images = imagePath.map((path) => ({
+            path,
+            ref_article: article.id,
+          }));
+          ImgArticle.bulkCreate(images)
+            .then((images) => {
+              const message = "L'article a été créé avec succès";
+              return res.json({ message });
+            })
+            .catch((error) => {
+              const message =
+                "L'article a été créé avec succès mais les images n'ont pas pu être ajoutées. Réessayez dans quelques instants";
+              return res.json({ message, data: error });
+            });
+        } else {
+          const message = "L'article a été créé avec succès";
+          return res.json({ message });
+        }
       })
       .catch((error) => {
         const message =
@@ -34,7 +51,7 @@ exports.deleteArticle = (req, res, next) => {
   Articles.destroy({ where: { id: req.params.id } })
     .then((article) => {
       const message = "L'article a été supprimé avec succès";
-      return res.json({ message, data: article });
+      return res.json({ message });
     })
     .catch((error) => {
       const message =
@@ -48,8 +65,26 @@ exports.getArticles = (req, res, next) => {
 
   if (id) {
     Articles.findOne({ where: { id: id } }).then((article) => {
-      const message = "L'article a été récupéré avec succès";
-      return res.json({ message, data: article });
+      Comment.findAll({ where: { ref_article: id } })
+        .then((comments) => {
+          article.comments = comments;
+          ImgArticle.findAll({ where: { ref_article: id } })
+            .then((images) => {
+              article.images = images;
+              const message = "L'article a été récupéré avec succès";
+              return res.json({ message, data: article });
+            })
+            .catch((error) => {
+              const message =
+                "La liste des images n'a pas pu être récupérée. Réessayez dans quelques instants";
+              return res.json({ message, data: error });
+            });
+        })
+        .catch((error) => {
+          const message =
+            "La liste des commentaires n'a pas pu être récupérée. Réessayez dans quelques instants";
+          return res.json({ message, data: error });
+        });
     });
   } else {
     Articles.findAll()
