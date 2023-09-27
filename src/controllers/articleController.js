@@ -59,17 +59,8 @@ exports.getArticles = (req, res, next) => {
       Comment.findAll({ where: { ref_article: id } })
         .then((comments) => {
           article.comments = comments;
-          ImgArticle.findAll({ where: { ref_article: id } })
-            .then((images) => {
-              article.images = images;
-              const message = "L'article a été récupéré avec succès";
-              return res.json({ message, data: article });
-            })
-            .catch((error) => {
-              const message =
-                "La liste des images n'a pas pu être récupérée. Réessayez dans quelques instants";
-              return res.json({ message, data: error });
-            });
+          const message = "L'article a été récupéré avec succès";
+          return res.json({ message, data: article });
         })
         .catch((error) => {
           const message =
