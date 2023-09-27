@@ -10,6 +10,7 @@ const ParcsModel = require("../models/parcs.js");
 const ParcsCalendarModel = require("../models/parcscalendar.js");
 const ReviewModel = require("../models/review.js");
 const TypeAttractionModel = require("../models/typeattraction.js");
+const imgAttrModel = require("../models/imgAttr.js");
 
 const sequelize = new Sequelize("tfe", "root", "", {
   host: "localhost",
@@ -29,6 +30,7 @@ const Parcs = ParcsModel(sequelize, DataTypes);
 const ParcsCalendar = ParcsCalendarModel(sequelize, DataTypes);
 const Review = ReviewModel(sequelize, DataTypes);
 const TypeAttraction = TypeAttractionModel(sequelize, DataTypes);
+const imgAttr = imgAttrModel(sequelize, DataTypes);
 
 CommentArticles.belongsTo(User, { foreignKey: "ref_user" });
 CommentArticles.belongsTo(Article, { foreignKey: "ref_article" });
@@ -43,6 +45,8 @@ CommentAttr.belongsTo(Attraction, { foreignKey: "ref_attraction" });
 
 Attraction.belongsTo(TypeAttraction, { foreignKey: "ref_type" });
 Attraction.belongsTo(Parcs, { foreignKey: "ref_parc" });
+
+imgAttr.belongsTo(Attraction, { foreignKey: "ref_attraction" });
 
 const initDb = () => {
   return sequelize.sync({ force: true }).then((_) => {
@@ -73,4 +77,5 @@ module.exports = {
   ParcsCalendar,
   Review,
   TypeAttraction,
+  imgAttr,
 };
