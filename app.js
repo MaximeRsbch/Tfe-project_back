@@ -15,6 +15,7 @@ const commentAttrRouter = require("./src/router/commentAttrRouter.js");
 const usersRouter = require("./src/router/usersRouter.js");
 const parcRouter = require("./src/router/parcsRouter.js");
 const articleRouter = require("./src/router/articlesRouter.js");
+const attractionRouter = require("./src/router/attractionsRouter.js");
 
 global.__basedir = __dirname;
 
@@ -38,7 +39,8 @@ app
   .use("/api/commentsattr", commentAttrRouter)
   .use("/api/users", usersRouter)
   .use("/api/parcs", parcRouter)
-  .use("/api/articles", articleRouter);
+  .use("/api/articles", articleRouter)
+  .use("/api/attractions", attractionRouter);
 
 sequelize.initDb();
 
