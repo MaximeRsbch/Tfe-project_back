@@ -1,59 +1,53 @@
 const { Article, Comment } = require("../db/sequelize.js");
+const fs = require("fs");
 
 exports.createArticle = (req, res, next) => {
   let imagePath = null;
 
   if (req.file) {
     imagePath = req.file.path;
-  } else if (req.files) {
-    console.log(req.files);
-    imagePath = req.files.map((file) => file.path);
-    console.log(imagePath);
   }
-
   Article.create({
     title: req.body.title,
     content: req.body.content,
+    img_url: imagePath,
   })
     .then((article) => {
-      if (imagePath) {
-        const images = imagePath.map((path) => ({
-          img_url: path,
-          ref_article: article.id,
-        }));
-        console.log(images);
-        ImgArticle.bulkCreate(images)
-          .then((images) => {
-            const message = "L'article a été créé avec succès";
-            return res.json({ message });
-          })
-          .catch((error) => {
-            const message =
-              "L'article a été créé avec succès mais les images n'ont pas pu être ajoutées. Réessayez dans quelques instants";
-            return res.json({ message, data: error });
-          });
-      } else {
-        const message = "L'article a été créé avec succès";
-        return res.json({ message });
-      }
+      const message = "L'article a été créé avec succès";
+      return res.json({ message });
     })
-    .catch((error) => {
+    .catch((e) => {
       const message =
         "L'article n'a pas pu être créé. Réessayez dans quelques instants";
-      return res.json({ message, data: error });
+      return res.status(500).json({ message, data: e });
     });
 };
 
 exports.deleteArticle = (req, res, next) => {
-  Article.destroy({ where: { id: req.params.id } })
+  Article.findOne({ where: { id: req.params.id } })
     .then((article) => {
-      const message = "L'article a été supprimé avec succès";
-      return res.json({ message });
+      fs.unlink(__basedir + "/" + article.img_url, (err) => {
+        if (err) {
+          const message =
+            "L'article n'a pas pu être supprimé. Réessayez dans quelques instants";
+          return res.status(500).json({ message, data: err });
+        }
+      });
+      Article.destroy({ where: { id: req.params.id } })
+        .then((article) => {
+          const message = "L'article a été supprimé avec succès";
+          return res.json({ message });
+        })
+        .catch((error) => {
+          const message =
+            "L'article n'a pas pu être supprimé. Réessayez dans quelques instants";
+          return res.json({ message, data: error });
+        });
     })
     .catch((error) => {
       const message =
         "L'article n'a pas pu être supprimé. Réessayez dans quelques instants";
-      return res.json({ message, data: error });
+      return res.status(500).json({ message, data: error });
     });
 };
 

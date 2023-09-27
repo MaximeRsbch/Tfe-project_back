@@ -16,6 +16,8 @@ const usersRouter = require("./src/router/usersRouter.js");
 const parcRouter = require("./src/router/parcsRouter.js");
 const articleRouter = require("./src/router/articlesRouter.js");
 
+global.__basedir = __dirname;
+
 app.use(morgan("dev"));
 
 const corsConf = {
