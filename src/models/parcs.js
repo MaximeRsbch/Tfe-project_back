@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     beginHour: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       validate: {
         notEmpty: {
           msg: "L'heure de début ne peut pas être vide.",
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     endHour: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       validate: {
         notEmpty: {
           msg: "L'heure de fin ne peut pas être vide.",
@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     ticketPrice: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       validate: {
         notEmpty: {
           msg: "Le prix ne peut pas être vide.",

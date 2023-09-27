@@ -46,14 +46,20 @@ const getUniquePark = async (id, res) => {
 };
 
 exports.createPark = async (req, res) => {
+  const id = req.body.id;
   const nom = req.body.nom;
   const beginHour = req.body.beginHour;
   const endHour = req.body.endHour;
   const localisation = req.body.localisation;
   const ticketPrice = req.body.ticketPrice;
 
+  if (!id) {
+    res.status(500).json({ message: "Veuillez remplir l'id" });
+  }
+
   try {
     await Parcs.create({
+      id,
       nom,
       beginHour,
       endHour,
