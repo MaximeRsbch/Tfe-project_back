@@ -28,7 +28,7 @@ app
   .use(bodyParser.json())
   .use(cors(corsConf))
   .use("/api/queuetime", queuetimeRouter) // à delete
-  .use("/api/mapbox", mapboxRouter) // jsp c quoi
+  .use("/api/mapbox", mapboxRouter)
   .use("/api/auth", authRouter)
   .use("/api/commentsart", commentArtRouter)
   .use("/api/users", usersRouter)
