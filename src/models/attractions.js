@@ -60,6 +60,14 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      is_open: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+      },
+      wait_time: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
       ref_type: {
         type: DataTypes.INTEGER,
         allowNull: false,
