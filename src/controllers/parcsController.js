@@ -4,10 +4,8 @@ const { Parcs, Attraction } = require("../db/sequelize");
 exports.getParksWithQueueTime = async (req, res) => {
   try {
     const response = await axios.get(`https://queue-times.com/fr/parks.json`);
-    const parksList = response.data.map((entry) => entry.parks).flat(); // Extract and flatten the "parks" data
+    const parksList = response.data.map((entry) => entry.parks).flat();
 
-    // Now, parksList contains only the parks data
-    console.log(parksList);
     res.status(200).json(parksList);
   } catch (e) {
     res.status(500).json({ message: e.message });
