@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     beginHour: {
-      type: DataTypes.String,
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: {
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     endHour: {
-      type: DataTypes.String,
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: {
@@ -32,7 +32,16 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
     },
-    localisation: {
+    latitude: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "La localisation ne peut pas être vide.",
+        },
+      },
+    },
+    longitude: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -42,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     ticketPrice: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: {

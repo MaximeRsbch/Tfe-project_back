@@ -18,15 +18,17 @@ exports.deleteOneComment = (req, res, next) => {
 };
 
 exports.findAllComments = (req, res, next) => {
-  CommentArticles.findAll()
+  CommentArticles.findAll({
+    where: {
+      ref_article: req.params.id,
+    },
+  })
     .then((comments) => {
-      const message = "La liste des commentaires a bien été récupérée";
-      return res.json({ message, data: comments });
+      res.json({ data: comments });
     })
-    .catch((error) => {
-      const message =
-        "La liste des commentaires n'a pas pu être récupérée. Réessayez dans quelques instants";
-      return res.json({ message, data: error });
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
     });
 };
 

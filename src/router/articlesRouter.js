@@ -44,3 +44,5 @@ router.post("/", upload.array("uploadedImages", 3), articlesCtrl.createArticle);
 router.delete("/:id", articlesCtrl.deleteArticle);
 
 router.get("/:id?", articlesCtrl.getArticles);
+
+module.exports = router;

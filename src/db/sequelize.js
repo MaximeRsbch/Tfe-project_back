@@ -52,10 +52,6 @@ Attraction.belongsTo(Parcs, { foreignKey: "ref_parc" });
 
 const initDb = () => {
   return sequelize.sync({ force: true }).then((_) => {
-    Comment.create({
-      content: "Ceci est un commentaire",
-    }).then((comment) => console.log(comment.toJSON));
-
     bcrypt
       .hash("admin", 10)
       .then((hash) =>

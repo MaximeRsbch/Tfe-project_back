@@ -1,7 +1,7 @@
 const { User } = require("../db/sequelize.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const privateKey = require("../../auth/private_key.js");
+const privateKey = require("../auth/private_key.js");
 
 exports.login = (req, res, next) => {
   User.findOne({ where: { email: req.body.email } })

@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
       },
       day: {
-        type: DataTypes.DATETIME,
+        type: DataTypes.DATE,
         allowNull: false,
         validate: {
           notEmpty: {
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       beginHour: {
-        type: DataTypes.String,
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: {
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       endHour: {
-        type: DataTypes.String,
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: {

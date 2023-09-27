@@ -1,4 +1,4 @@
-const { User } = require("../../db/sequelize");
+const { User } = require("../db/sequelize");
 
 exports.deleteUser = (req, res, next) => {
   User.destroy({

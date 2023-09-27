@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       minHeight: {
-        type: DataTypes.String,
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: {
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       maxHeight: {
-        type: DataTypes.String,
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: {
@@ -34,7 +34,16 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      localisation: {
+      latitude: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "La localisation ne peut pas être vide.",
+          },
+        },
+      },
+      longitude: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
