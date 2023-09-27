@@ -4,7 +4,6 @@ const bcrypt = require("bcrypt");
 const UserModel = require("../models/user.js");
 const CommentArticlesModel = require("../models/commentarticles.js");
 const ArticleModel = require("../models/articles.js");
-const ImgArticleModel = require("../models/img_article.js");
 const AttractionModel = require("../models/attractions.js");
 const CommentAttrModel = require("../models/commentAttr.js");
 const ParcsModel = require("../models/parcs.js");
@@ -24,15 +23,12 @@ const sequelize = new Sequelize("tfe", "root", "", {
 const User = UserModel(sequelize, DataTypes);
 const CommentArticles = CommentArticlesModel(sequelize, DataTypes);
 const Article = ArticleModel(sequelize, DataTypes);
-const ImgArticle = ImgArticleModel(sequelize, DataTypes);
 const Attraction = AttractionModel(sequelize, DataTypes);
 const CommentAttr = CommentAttrModel(sequelize, DataTypes);
 const Parcs = ParcsModel(sequelize, DataTypes);
 const ParcsCalendar = ParcsCalendarModel(sequelize, DataTypes);
 const Review = ReviewModel(sequelize, DataTypes);
 const TypeAttraction = TypeAttractionModel(sequelize, DataTypes);
-
-ImgArticle.belongsTo(Article, { foreignKey: "ref_article" });
 
 CommentArticles.belongsTo(User, { foreignKey: "ref_user" });
 CommentArticles.belongsTo(Article, { foreignKey: "ref_article" });
@@ -41,8 +37,6 @@ Review.belongsTo(User, { foreignKey: "ref_user" });
 Review.belongsTo(Attraction, { foreignKey: "ref_attraction" });
 
 ParcsCalendar.belongsTo(Parcs, { foreignKey: "ref_parc" });
-
-ImgArticle.belongsTo(Article, { foreignKey: "ref_article" });
 
 CommentAttr.belongsTo(User, { foreignKey: "ref_user" });
 CommentAttr.belongsTo(Attraction, { foreignKey: "ref_attraction" });
@@ -73,7 +67,6 @@ module.exports = {
   CommentArticles,
   User,
   Article,
-  ImgArticle,
   Attraction,
   CommentAttr,
   Parcs,

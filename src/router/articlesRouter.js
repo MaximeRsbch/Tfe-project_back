@@ -7,10 +7,7 @@ const path = require("path");
 const storage = multer.diskStorage({
   destination: "./public/uploads/",
   filename: function (req, file, cb) {
-    cb(
-      null,
-      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
-    );
+    cb(null, "image" + "-" + Date.now() + path.extname(file.originalname));
   },
 });
 
@@ -39,7 +36,7 @@ function checkFileType(file, cb) {
   }
 }
 
-router.post("/", upload.array("uploadedImages", 3), articlesCtrl.createArticle);
+router.post("/", upload.array("uploadedImages", 2), articlesCtrl.createArticle);
 
 router.delete("/:id", articlesCtrl.deleteArticle);
 

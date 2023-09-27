@@ -1,4 +1,4 @@
-const { CommentAttr, User } = require("../../db/sequelize.js");
+const { CommentAttr, User } = require("../db/sequelize.js");
 
 exports.deleteOneComment = (req, res, next) => {
   CommentAttr.destroy({

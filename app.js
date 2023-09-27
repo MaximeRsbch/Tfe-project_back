@@ -11,8 +11,10 @@ const queuetimeRouter = require("./src/router/queuetimeRouter.js");
 const mapboxRouter = require("./src/router/mapboxRouter.js");
 const authRouter = require("./src/router/authRouter.js");
 const commentArtRouter = require("./src/router/commentArtRouter.js");
+const commentAttrRouter = require("./src/router/commentAttrRouter.js");
 const usersRouter = require("./src/router/usersRouter.js");
 const parcRouter = require("./src/router/parcsRouter.js");
+const articleRouter = require("./src/router/articlesRouter.js");
 
 app.use(morgan("dev"));
 
@@ -31,8 +33,10 @@ app
   .use("/api/mapbox", mapboxRouter)
   .use("/api/auth", authRouter)
   .use("/api/commentsart", commentArtRouter)
+  .use("/api/commentsattr", commentAttrRouter)
   .use("/api/users", usersRouter)
-  .use("/api/parcs", parcRouter);
+  .use("/api/parcs", parcRouter)
+  .use("/api/articles", articleRouter);
 
 sequelize.initDb();
 

@@ -1,54 +1,51 @@
-const { Articles, ImgArticle, Comment } = require("../db/sequelize.js");
+const { Article, Comment } = require("../db/sequelize.js");
 
 exports.createArticle = (req, res, next) => {
   let imagePath = null;
 
-  try {
-    if (req.file) {
-      imagePath = req.file.path;
-    } else if (req.files) {
-      imagePath = req.files.map((file) => file.path);
-    }
-
-    const article = {
-      title: req.body.title,
-      content: req.body.content,
-    };
-
-    Articles.create(article)
-      .then((article) => {
-        if (imagePath) {
-          const images = imagePath.map((path) => ({
-            path,
-            ref_article: article.id,
-          }));
-          ImgArticle.bulkCreate(images)
-            .then((images) => {
-              const message = "L'article a été créé avec succès";
-              return res.json({ message });
-            })
-            .catch((error) => {
-              const message =
-                "L'article a été créé avec succès mais les images n'ont pas pu être ajoutées. Réessayez dans quelques instants";
-              return res.json({ message, data: error });
-            });
-        } else {
-          const message = "L'article a été créé avec succès";
-          return res.json({ message });
-        }
-      })
-      .catch((error) => {
-        const message =
-          "L'article n'a pas pu être créé. Réessayez dans quelques instants";
-        return res.json({ message, data: error });
-      });
-  } catch (error) {
-    res.status(500).json({ error });
+  if (req.file) {
+    imagePath = req.file.path;
+  } else if (req.files) {
+    console.log(req.files);
+    imagePath = req.files.map((file) => file.path);
+    console.log(imagePath);
   }
+
+  Article.create({
+    title: req.body.title,
+    content: req.body.content,
+  })
+    .then((article) => {
+      if (imagePath) {
+        const images = imagePath.map((path) => ({
+          img_url: path,
+          ref_article: article.id,
+        }));
+        console.log(images);
+        ImgArticle.bulkCreate(images)
+          .then((images) => {
+            const message = "L'article a été créé avec succès";
+            return res.json({ message });
+          })
+          .catch((error) => {
+            const message =
+              "L'article a été créé avec succès mais les images n'ont pas pu être ajoutées. Réessayez dans quelques instants";
+            return res.json({ message, data: error });
+          });
+      } else {
+        const message = "L'article a été créé avec succès";
+        return res.json({ message });
+      }
+    })
+    .catch((error) => {
+      const message =
+        "L'article n'a pas pu être créé. Réessayez dans quelques instants";
+      return res.json({ message, data: error });
+    });
 };
 
 exports.deleteArticle = (req, res, next) => {
-  Articles.destroy({ where: { id: req.params.id } })
+  Article.destroy({ where: { id: req.params.id } })
     .then((article) => {
       const message = "L'article a été supprimé avec succès";
       return res.json({ message });
@@ -64,7 +61,7 @@ exports.getArticles = (req, res, next) => {
   const id = req.params.id;
 
   if (id) {
-    Articles.findOne({ where: { id: id } }).then((article) => {
+    Article.findOne({ where: { id: id } }).then((article) => {
       Comment.findAll({ where: { ref_article: id } })
         .then((comments) => {
           article.comments = comments;
@@ -87,7 +84,7 @@ exports.getArticles = (req, res, next) => {
         });
     });
   } else {
-    Articles.findAll()
+    Article.findAll()
       .then((articles) => {
         const message = "La liste des articles a été récupérée avec succès";
         return res.json({ message, data: articles });

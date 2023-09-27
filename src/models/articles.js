@@ -23,5 +23,14 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
     },
+    img_url: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "L'url de l'image ne peut pas être vide.",
+        },
+      },
+    },
   });
 };
