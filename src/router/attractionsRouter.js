@@ -43,7 +43,11 @@ router.get("/:id/queuetime", attractionCtrl.findAttractionQueueTime);
 router.post(
   "/:id/img",
   upload.single("img"),
-  attractionCtrl.createAttractionQueueTime
+  attractionCtrl.createImgAttraction
 );
+
+router.post("/", attractionCtrl.createAttraction);
+router.get("/:id?", attractionCtrl.getAttractions);
+router.put("/:id", attractionCtrl.updateAttraction);
 
 module.exports = router;
