@@ -34,19 +34,29 @@ const imgAttr = imgAttrModel(sequelize, DataTypes);
 
 CommentArticles.belongsTo(User, { foreignKey: "ref_user" });
 CommentArticles.belongsTo(Article, { foreignKey: "ref_article" });
+User.hasMany(CommentArticles, { foreignKey: "ref_user" });
+Article.hasMany(CommentArticles, { foreignKey: "ref_article" });
 
 Review.belongsTo(User, { foreignKey: "ref_user" });
 Review.belongsTo(Attraction, { foreignKey: "ref_attraction" });
+User.hasMany(Review, { foreignKey: "ref_user" });
+Attraction.hasMany(Review, { foreignKey: "ref_attraction" });
 
 ParcsCalendar.belongsTo(Parcs, { foreignKey: "ref_parc" });
+Parcs.hasMany(ParcsCalendar, { foreignKey: "ref_parc" });
 
 CommentAttr.belongsTo(User, { foreignKey: "ref_user" });
 CommentAttr.belongsTo(Attraction, { foreignKey: "ref_attraction" });
+User.hasMany(CommentAttr, { foreignKey: "ref_user" });
+Attraction.hasMany(CommentAttr, { foreignKey: "ref_attraction" });
 
 Attraction.belongsTo(TypeAttraction, { foreignKey: "ref_type" });
 Attraction.belongsTo(Parcs, { foreignKey: "ref_parc" });
+TypeAttraction.hasMany(Attraction, { foreignKey: "ref_type" });
+Parcs.hasMany(Attraction, { foreignKey: "ref_parc" });
 
 imgAttr.belongsTo(Attraction, { foreignKey: "ref_attraction" });
+Attraction.hasMany(imgAttr, { foreignKey: "ref_attraction" });
 
 const initDb = () => {
   return sequelize.sync({ force: true }).then((_) => {
