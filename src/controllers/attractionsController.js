@@ -1,4 +1,9 @@
-const { Attraction, ImgAttr } = require("../db/sequelize.js");
+const {
+  Attraction,
+  imgAttr,
+  Review,
+  CommentAttr,
+} = require("../db/sequelize.js");
 const axios = require("axios");
 
 exports.findAttractionQueueTime = (req, res, next) => {
@@ -34,10 +39,11 @@ exports.createImgAttraction = (req, res, next) => {
     if (attraction === null) {
       res.status(500).json({ message: "Attraction non trouvée" });
     } else {
-      ImgAttr.create({
-        img_url: imagePath,
-        ref_attraction: id,
-      })
+      imgAttr
+        .create({
+          img_url: imagePath,
+          ref_attraction: id,
+        })
         .then((img) => {
           res.status(201).json(img);
         })
@@ -99,11 +105,26 @@ exports.findAttraction = (req, res, next) => {
   const id = req.params.id;
 
   if (id) {
-    Attraction.findAll({
-      where: {
-        ref_parc: id,
+    Attraction.findAll(
+      {
+        where: {
+          ref_parc: id,
+        },
       },
-    })
+      {
+        include: [
+          {
+            model: imgAttr,
+          },
+          {
+            model: Review,
+          },
+          {
+            model: CommentAttr,
+          },
+        ],
+      }
+    )
       .then((attr) => {
         res.json(attr);
       })
@@ -159,24 +180,43 @@ exports.updateAttraction = (req, res, next) => {
 exports.deleteAttraction = (req, res, next) => {
   const id = req.params.id;
 
-  Attraction.destroy({
-    where: {
-      id: id,
-    },
-  })
-    .then((attr) => {
-      ImgAttr.destroy({
+  imgAttr
+    .destroy({
+      where: {
+        ref_attraction: id,
+      },
+    })
+    .then((_) => {
+      Attraction.destroy({
         where: {
-          ref_attraction: id,
+          id: id,
         },
       })
-        .then((img) => {
-          res.status(200).json({ message: "Attraction supprimée" });
+        .then((attr) => {
+          res.json({ message: "Attraction supprimée" });
         })
         .catch((err) => {
           console.log(err);
           res.status(500).json(err);
         });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+};
+
+exports.deleteImgAttraction = (req, res, next) => {
+  const id = req.params.id;
+
+  imgAttr
+    .destroy({
+      where: {
+        id: id,
+      },
+    })
+    .then((_) => {
+      res.json({ message: "Image supprimée" });
     })
     .catch((err) => {
       console.log(err);

@@ -49,5 +49,6 @@ router.post(
 router.post("/", attractionCtrl.createAttraction);
 router.get("/:id?", attractionCtrl.findAttraction);
 router.put("/:id", attractionCtrl.updateAttraction);
+router.delete("/:id", attractionCtrl.deleteAttraction);
 
 module.exports = router;

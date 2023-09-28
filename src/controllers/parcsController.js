@@ -1,5 +1,11 @@
 const axios = require("axios");
-const { Parcs, Attraction } = require("../db/sequelize");
+const {
+  Parcs,
+  Attraction,
+  imgAttr,
+  Review,
+  CommentAttr,
+} = require("../db/sequelize");
 
 exports.getParksWithQueueTime = async (req, res) => {
   try {
@@ -33,11 +39,31 @@ const getAllParks = async (res) => {
 
 const getUniquePark = async (id, res) => {
   try {
-    const park = await Parcs.findByPk(id);
-    const attraction = await Attraction.findAll({
-      where: { ref_parc: id },
-    });
-    res.status(200).json({ message: "Succès", park, attraction });
+    Parcs.findByPk(id, {
+      include: [
+        {
+          model: Attraction,
+          include: [
+            {
+              model: imgAttr,
+            },
+            {
+              model: Review,
+            },
+            {
+              model: CommentAttr,
+            },
+          ],
+        },
+      ],
+    })
+      .then((data) => {
+        res.status(200).json(data);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).json({ message: err.message });
+      });
   } catch (e) {
     res.status(500).json({ message: e.message });
   }
@@ -109,4 +135,30 @@ exports.deletePark = async (req, res) => {
   }
 };
 
-exports.getAllInformations = async (req, res) => {};
+exports.getAllInformations = async (req, res) => {
+  Parcs.findAll({
+    include: [
+      {
+        model: Attraction,
+        include: [
+          {
+            model: imgAttr,
+          },
+          {
+            model: Review,
+          },
+          {
+            model: CommentAttr,
+          },
+        ],
+      },
+    ],
+  })
+    .then((data) => {
+      res.status(200).json(data);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ message: err.message });
+    });
+};
