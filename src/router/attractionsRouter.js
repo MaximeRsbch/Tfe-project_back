@@ -47,7 +47,7 @@ router.post(
 );
 
 router.post("/", attractionCtrl.createAttraction);
-router.get("/:id?", attractionCtrl.getAttractions);
+router.get("/:id?", attractionCtrl.findAttraction);
 router.put("/:id", attractionCtrl.updateAttraction);
 
 module.exports = router;

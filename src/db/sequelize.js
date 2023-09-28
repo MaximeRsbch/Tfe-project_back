@@ -59,18 +59,20 @@ imgAttr.belongsTo(Attraction, { foreignKey: "ref_attraction" });
 Attraction.hasMany(imgAttr, { foreignKey: "ref_attraction" });
 
 const initDb = () => {
-  return sequelize.sync({ force: true }).then((_) => {
-    bcrypt
-      .hash("admin", 10)
-      .then((hash) =>
-        User.create({
+  return sequelize.sync({ force: false }).then((_) => {
+    bcrypt.hash("admin", 10).then((hash) =>
+      User.findOrCreate({
+        where: {
+          username: "admin",
+        },
+        defaults: {
           role: "admin",
           username: "admin",
           email: "admin@admin.com",
           password: hash,
-        })
-      )
-      .then((user) => console.log(user.toJSON));
+        },
+      })
+    );
 
     console.log("La base de donnée a bien été initialisée !");
   });
