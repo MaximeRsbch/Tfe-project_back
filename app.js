@@ -10,7 +10,6 @@ const port = 3000;
 const authRouter = require("./src/router/authRouter.js");
 const queuetimeRouter = require("./src/router/queuetimeRouter.js");
 const mapboxRouter = require("./src/router/mapboxRouter.js");
-const authRouter = require("./src/router/authRouter.js");
 const commentArtRouter = require("./src/router/commentArtRouter.js");
 const commentAttrRouter = require("./src/router/commentAttrRouter.js");
 const usersRouter = require("./src/router/usersRouter.js");

@@ -78,7 +78,7 @@ exports.register = (req, res, next) => {
                 to: user.email,
                 subject: "Vérification de votre adresse mail",
                 text: `Bonjour, ${user.username}. Veuillez vérifier votre adresse mail en cliquant sur le lien suivant :
-                http://localhost:3000/api/auth/verify/${user.id}/${setToken.token}`,
+                http://localhost:3000/api/auth/verify/${user.id}/${token.token}`,
               })
                 .then((result) => {
                   const message = `L'utilisateur a été créé avec succès`;
@@ -94,6 +94,7 @@ exports.register = (req, res, next) => {
             }
           })
           .catch((err) => {
+            console.log(err);
             const message = `L'user n'a pas pu être créé. Réessayez dans quelques instants`;
             return res.status(401).json({ message });
           });
