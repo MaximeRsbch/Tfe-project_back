@@ -65,3 +65,10 @@ exports.muteUser = (req, res, next) => {
 
   User.update({ canComment: mute }, { where: { id: id } });
 };
+
+exports.changeRole = (req, res, next) => {
+  const role = req.body.role;
+  const id = req.params.id;
+
+  User.update({ role: role }, { where: { id: id } });
+};
