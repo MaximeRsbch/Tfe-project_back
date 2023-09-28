@@ -2,6 +2,10 @@ const { Article, Comment } = require("../db/sequelize.js");
 const fs = require("fs");
 
 exports.createArticle = (req, res, next) => {
+  if (req.userRole !== "admin") {
+    const message = "Vous n'avez pas les droits pour créer un article";
+    return res.status(401).json({ message });
+  }
   let imagePath = null;
 
   if (req.file) {
@@ -24,6 +28,10 @@ exports.createArticle = (req, res, next) => {
 };
 
 exports.deleteArticle = (req, res, next) => {
+  if (req.userRole !== "admin") {
+    const message = "Vous n'avez pas les droits pour créer un article";
+    return res.status(401).json({ message });
+  }
   Article.findOne({ where: { id: req.params.id } })
     .then((article) => {
       fs.unlink(__basedir + "/" + article.img_url, (err) => {

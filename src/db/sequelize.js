@@ -75,6 +75,7 @@ const initDb = () => {
           username: "admin",
           email: "admin@admin.com",
           password: hash,
+          isVerified: true,
         },
       })
     );

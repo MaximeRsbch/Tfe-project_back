@@ -1,6 +1,10 @@
 const { User } = require("../db/sequelize");
 
 exports.deleteUser = (req, res, next) => {
+  if (req.userRole !== "admin") {
+    const message = "Vous n'avez pas les droits pour créer un article";
+    return res.status(401).json({ message });
+  }
   User.destroy({
     where: {
       id: req.params.id,
@@ -50,6 +54,10 @@ exports.findUsers = (req, res, next) => {
 };
 
 exports.modifyUser = (req, res, next) => {
+  if (req.userRole !== "admin") {
+    const message = "Vous n'avez pas les droits pour créer un article";
+    return res.status(401).json({ message });
+  }
   User.update(req.body, {
     where: { id: req.params.id },
   })
@@ -60,6 +68,10 @@ exports.modifyUser = (req, res, next) => {
 };
 
 exports.muteUser = (req, res, next) => {
+  if (req.userRole !== "admin" || req.userRole !== "modo") {
+    const message = "Vous n'avez pas les droits pour créer un article";
+    return res.status(401).json({ message });
+  }
   const mute = req.body.canComment;
   const id = req.params.id;
 
@@ -67,6 +79,10 @@ exports.muteUser = (req, res, next) => {
 };
 
 exports.changeRole = (req, res, next) => {
+  if (req.userRole !== "admin") {
+    const message = "Vous n'avez pas les droits pour créer un article";
+    return res.status(401).json({ message });
+  }
   const role = req.body.role;
   const id = req.params.id;
 

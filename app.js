@@ -7,6 +7,8 @@ const cors = require("cors");
 const app = express();
 const port = 3000;
 
+const throughMiddleware = require("./src/middlewares/TroughMiddleware.js");
+
 const authRouter = require("./src/router/authRouter.js");
 const queuetimeRouter = require("./src/router/queuetimeRouter.js");
 const mapboxRouter = require("./src/router/mapboxRouter.js");
@@ -32,6 +34,7 @@ const corsConf = {
 app
   .use(bodyParser.json())
   .use(cors(corsConf))
+  .use("/api", throughMiddleware.throughMiddleware)
   .use("/api/queuetime", queuetimeRouter) // à delete
   .use("/api/mapbox", mapboxRouter)
   .use("/api/auth", authRouter)

@@ -70,6 +70,10 @@ const getUniquePark = async (id, res) => {
 };
 
 exports.createPark = async (req, res) => {
+  if (req.userRole !== "admin" || req.userRole !== "modo") {
+    const message = "Vous n'avez pas les droits pour créer un article";
+    return res.status(401).json({ message });
+  }
   const id = req.body.id;
   const nom = req.body.nom;
   const beginHour = req.body.beginHour;
@@ -97,6 +101,10 @@ exports.createPark = async (req, res) => {
 };
 
 exports.updatePark = async (req, res) => {
+  if (req.userRole !== "admin" || req.userRole !== "modo") {
+    const message = "Vous n'avez pas les droits pour créer un article";
+    return res.status(401).json({ message });
+  }
   const nom = req.body.nom;
   const beginHour = req.body.beginHour;
   const endHour = req.body.endHour;
