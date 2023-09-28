@@ -7,6 +7,7 @@ const cors = require("cors");
 const app = express();
 const port = 3000;
 
+const authRouter = require("./src/router/authRouter.js");
 const queuetimeRouter = require("./src/router/queuetimeRouter.js");
 const mapboxRouter = require("./src/router/mapboxRouter.js");
 const authRouter = require("./src/router/authRouter.js");
@@ -40,7 +41,8 @@ app
   .use("/api/users", usersRouter)
   .use("/api/parcs", parcRouter)
   .use("/api/articles", articleRouter)
-  .use("/api/attractions", attractionRouter);
+  .use("/api/attractions", attractionRouter)
+  .use("/api/auth", authRouter);
 
 sequelize.initDb();
 
