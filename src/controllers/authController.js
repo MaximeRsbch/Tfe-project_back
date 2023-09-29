@@ -14,6 +14,10 @@ exports.login = (req, res, next) => {
         const message = `L'user demandé n'existe pas.`;
         return res.status(404).json({ message });
       }
+      if (!user.isVerified) {
+        const message = `L'utilisateur n'est pas vérifié. Veuillez vérifier votre adresse mail.`;
+        return res.status(401).json({ message });
+      }
 
       bcrypt
         .compare(req.body.password, user.password)
@@ -80,7 +84,7 @@ exports.register = (req, res, next) => {
             if (token) {
               sendingMail({
                 to: user.email,
-                subject: "Vérification de votre adresse mail",
+                subject: "Vérification de votre adresse mail WatchUrPark",
                 text: `Bonjour, ${user.username}. Veuillez vérifier votre adresse mail en cliquant sur le lien suivant :
                 http://localhost:3000/api/auth/verify/${user.id}/${token.token}`,
               })

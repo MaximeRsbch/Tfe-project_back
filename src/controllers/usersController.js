@@ -72,7 +72,18 @@ exports.muteUser = (req, res, next) => {
     const message = "Vous n'avez pas les droits pour créer un article";
     return res.status(401).json({ message });
   }
-  const mute = req.body.canComment;
+  const mute = false;
+  const id = req.params.id;
+
+  User.update({ canComment: mute }, { where: { id: id } });
+};
+
+exports.unmuteUser = (req, res, next) => {
+  if (req.userRole !== "admin" || req.userRole !== "modo") {
+    const message = "Vous n'avez pas les droits pour créer un article";
+    return res.status(401).json({ message });
+  }
+  const mute = true;
   const id = req.params.id;
 
   User.update({ canComment: mute }, { where: { id: id } });
