@@ -24,9 +24,13 @@ exports.login = (req, res, next) => {
           }
 
           //JWT
-          const token = jwt.sign({ userID: user.id }, privateKey, {
-            expiresIn: "24h",
-          });
+          const token = jwt.sign(
+            { id_user: user.id, role: user.role },
+            privateKey,
+            {
+              expiresIn: "24h",
+            }
+          );
 
           const message = "L'utilisateur a été connecté avec succès";
           return res.json({ message, data: user, token });
