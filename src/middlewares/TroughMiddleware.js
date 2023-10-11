@@ -18,6 +18,7 @@ exports.throughMiddleware = (req, res, next) => {
     }
 
     const tokenValue = bearer[1];
+    const jwtSecret = privateKey;
 
     jwt.verify(tokenValue, jwtSecret, (err, decoded) => {
       if (err) {

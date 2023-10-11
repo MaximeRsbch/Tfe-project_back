@@ -70,7 +70,7 @@ const getUniquePark = async (id, res) => {
 };
 
 exports.createPark = async (req, res) => {
-  if (req.userRole !== "admin" || req.userRole !== "modo") {
+  if (req.userRole !== "admin" && req.userRole !== "modo") {
     const message = "Vous n'avez pas les droits pour créer un article";
     return res.status(401).json({ message });
   }
@@ -78,7 +78,8 @@ exports.createPark = async (req, res) => {
   const nom = req.body.nom;
   const beginHour = req.body.beginHour;
   const endHour = req.body.endHour;
-  const localisation = req.body.localisation;
+  const latitude = req.body.latitude;
+  const longitude = req.body.longitude;
   const ticketPrice = req.body.ticketPrice;
 
   if (!id) {
@@ -91,7 +92,8 @@ exports.createPark = async (req, res) => {
       nom,
       beginHour,
       endHour,
-      localisation,
+      latitude,
+      longitude,
       ticketPrice,
     });
     res.status(200).json({ message: "Succès" });

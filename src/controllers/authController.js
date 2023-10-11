@@ -14,10 +14,10 @@ exports.login = (req, res, next) => {
         const message = `L'user demandé n'existe pas.`;
         return res.status(404).json({ message });
       }
-      if (!user.isVerified) {
-        const message = `L'utilisateur n'est pas vérifié. Veuillez vérifier votre adresse mail.`;
-        return res.status(401).json({ message });
-      }
+      // if (!user.isVerified) {
+      //   const message = `L'utilisateur n'est pas vérifié. Veuillez vérifier votre adresse mail.`;
+      //   return res.status(401).json({ message });
+      // }
 
       bcrypt
         .compare(req.body.password, user.password)
@@ -130,27 +130,27 @@ exports.verifyEmail = (req, res, next) => {
       return res.status(401).json({ message });
     }
 
-    User.findOne({
-      where: { id: id },
-    }).then((user) => {
-      if (!user) {
-        const message = `L'user n'existe pas.`;
-        return res.status(401).json({ message });
-      }
-      if (user.isVerified) {
-        const message = `L'user est déjà vérifié.`;
-        return res.status(401).json({ message });
-      }
-      User.update(
-        { isVerified: true },
-        {
-          where: { id: id },
-        }
-      )
-        .then((result) => {
-          res.status(200).json(result);
-        })
-        .catch((err) => res.status(400).json(err));
-    });
+    // User.findOne({
+    //   where: { id: id },
+    // }).then((user) => {
+    //   if (!user) {
+    //     const message = `L'user n'existe pas.`;
+    //     return res.status(401).json({ message });
+    //   }
+    //   // if (user.isVerified) {
+    //   //   const message = `L'user est déjà vérifié.`;
+    //   //   return res.status(401).json({ message });
+    //   // }
+    //   // User.update(
+    //   //   { isVerified: true },
+    //   //   {
+    //   //     where: { id: id },
+    //   //   }
+    //   // )
+    //     .then((result) => {
+    //       res.status(200).json(result);
+    //     })
+    //     .catch((err) => res.status(400).json(err));
+    // });
   });
 };
