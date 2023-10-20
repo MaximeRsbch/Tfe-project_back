@@ -56,6 +56,11 @@ exports.createImgAttraction = (req, res, next) => {
 };
 
 exports.createAttraction = (req, res, next) => {
+  if (req.userRole !== "admin" && req.userRole !== "modoParc") {
+    const message = "Vous n'avez pas les droits pour créer une attraction";
+    return res.status(401).json({ message });
+  }
+
   const id = req.body.id;
   const name = req.body.name;
   const minHeight = req.body.minHeight;
@@ -145,6 +150,11 @@ exports.findAttraction = (req, res, next) => {
 };
 
 exports.updateAttraction = (req, res, next) => {
+  if (req.userRole !== "admin" && req.userRole !== "modoParc") {
+    const message = "Vous n'avez pas les droits pour modifier une attraction";
+    return res.status(401).json({ message });
+  }
+
   const id = req.params.id;
   const name = req.body.name;
   const minHeight = req.body.minHeight;
@@ -207,6 +217,10 @@ exports.deleteAttraction = (req, res, next) => {
 };
 
 exports.deleteImgAttraction = (req, res, next) => {
+  if (req.userRole !== "admin" && req.userRole !== "modoParc") {
+    const message = "Vous n'avez pas les droits pour supprimer une attraction";
+    return res.status(401).json({ message });
+  }
   const id = req.params.id;
 
   imgAttr

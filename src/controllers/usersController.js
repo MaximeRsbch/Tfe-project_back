@@ -2,7 +2,7 @@ const { User } = require("../db/sequelize");
 
 exports.deleteUser = (req, res, next) => {
   if (req.userRole !== "admin") {
-    const message = "Vous n'avez pas les droits pour créer un article";
+    const message = "Vous n'avez pas les droits pour supprimer un utilisateurs";
     return res.status(401).json({ message });
   }
   User.destroy({
@@ -54,10 +54,6 @@ exports.findUsers = (req, res, next) => {
 };
 
 exports.modifyUser = (req, res, next) => {
-  if (req.userRole !== "admin") {
-    const message = "Vous n'avez pas les droits pour créer un article";
-    return res.status(401).json({ message });
-  }
   User.update(req.body, {
     where: { id: req.params.id },
   })
@@ -68,8 +64,8 @@ exports.modifyUser = (req, res, next) => {
 };
 
 exports.muteUser = (req, res, next) => {
-  if (req.userRole !== "admin" || req.userRole !== "modo") {
-    const message = "Vous n'avez pas les droits pour créer un article";
+  if (req.userRole !== "admin" && req.userRole !== "modo") {
+    const message = "Vous n'avez pas les droits pour muter cet user";
     return res.status(401).json({ message });
   }
   const mute = false;
@@ -79,8 +75,8 @@ exports.muteUser = (req, res, next) => {
 };
 
 exports.unmuteUser = (req, res, next) => {
-  if (req.userRole !== "admin" || req.userRole !== "modo") {
-    const message = "Vous n'avez pas les droits pour créer un article";
+  if (req.userRole !== "admin" && req.userRole !== "modo") {
+    const message = "Vous n'avez pas les droits pour unmute cet user";
     return res.status(401).json({ message });
   }
   const mute = true;
@@ -91,7 +87,8 @@ exports.unmuteUser = (req, res, next) => {
 
 exports.changeRole = (req, res, next) => {
   if (req.userRole !== "admin") {
-    const message = "Vous n'avez pas les droits pour créer un article";
+    const message =
+      "Vous n'avez pas les droits pour changer le rôle de cet user";
     return res.status(401).json({ message });
   }
   const role = req.body.role;

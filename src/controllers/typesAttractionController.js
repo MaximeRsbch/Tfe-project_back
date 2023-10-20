@@ -1,9 +1,10 @@
-const TypeAttraction = require("../db/sequelize.js");
+const { TypeAttraction } = require("../db/sequelize.js");
 
 exports.findAllTypesAttraction = (req, res, next) => {
   TypeAttraction.findAll()
     .then((typesAttraction) => {
-      res.status(200).json(typesAttraction);
+      const message = "La liste des types d'attractions a bien été récupérée";
+      return res.json({ message, data: typesAttraction });
     })
     .catch((err) => {
       console.log(err);
@@ -12,10 +13,14 @@ exports.findAllTypesAttraction = (req, res, next) => {
 };
 
 exports.createTypesAttraction = (req, res, next) => {
-  const typeAttraction = req.body;
-  TypeAttraction.create(typeAttraction)
+  const name = req.body.name;
+
+  TypeAttraction.create({
+    name: name,
+  })
     .then((typeAttraction) => {
-      res.status(201).json(typeAttraction);
+      const message = "Le type d'attraction a bien été créé";
+      return res.json({ message, data: typeAttraction });
     })
     .catch((err) => {
       console.log(err);
@@ -24,61 +29,13 @@ exports.createTypesAttraction = (req, res, next) => {
 };
 
 exports.findOneTypesAttraction = (req, res, next) => {
-  const id = req.params.id;
-  TypeAttraction.findByPk(id)
-    .then((typeAttraction) => {
-      if (typeAttraction) {
-        res.status(200).json(typeAttraction);
-      } else {
-        res.status(404).json("TypeAttraction not found");
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
-};
-
-exports.updateTypesAttraction = (req, res, next) => {
-  const id = req.params.id;
-  const typeAttraction = req.body;
-  TypeAttraction.update(typeAttraction, { where: { id: id } })
-    .then((typeAttraction) => {
-      res.status(200).json(typeAttraction);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
-};
-
-exports.deleteTypesAttraction = (req, res, next) => {
-  const id = req.params.id;
-  TypeAttraction.destroy({ where: { id: id } })
-    .then((typeAttraction) => {
-      res.status(200).json(typeAttraction);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
-};
-
-exports.findAllAttractionsByType = (req, res, next) => {
-  const id = req.params.id;
-  TypeAttraction.findByPk(id, {
-    include: [
-      {
-        model: Attraction,
-        as: "attractions",
-        attributes: {
-          exclude: ["typeAttractionId", "createdAt", "updatedAt"],
-        },
-      },
-    ],
+  TypeAttraction.findOne({
+    where: {
+      id: req.params.id,
+    },
   })
-    .then((attr) => {
-      res.json(attr);
+    .then((typeAttraction) => {
+      res.json(typeAttraction);
     })
     .catch((err) => {
       console.log(err);

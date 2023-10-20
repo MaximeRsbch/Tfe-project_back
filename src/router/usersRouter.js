@@ -10,4 +10,6 @@ router.put("/:id", usersCtrl.modifyUser);
 
 router.put("/mute/:id", usersCtrl.muteUser);
 
+router.put("/role/:id", usersCtrl.changeRole);
+
 module.exports = router;

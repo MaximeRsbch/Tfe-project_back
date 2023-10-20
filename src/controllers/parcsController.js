@@ -70,8 +70,8 @@ const getUniquePark = async (id, res) => {
 };
 
 exports.createPark = async (req, res) => {
-  if (req.userRole !== "admin" && req.userRole !== "modo") {
-    const message = "Vous n'avez pas les droits pour créer un article";
+  if (req.userRole !== "admin" && req.userRole !== "modoParc") {
+    const message = "Vous n'avez pas les droits pour créer un parc";
     return res.status(401).json({ message });
   }
   const id = req.body.id;
@@ -85,6 +85,8 @@ exports.createPark = async (req, res) => {
   if (!id) {
     res.status(500).json({ message: "Veuillez remplir l'id" });
   }
+
+  console.log(req.body);
 
   try {
     await Parcs.create({
@@ -103,8 +105,8 @@ exports.createPark = async (req, res) => {
 };
 
 exports.updatePark = async (req, res) => {
-  if (req.userRole !== "admin" || req.userRole !== "modo") {
-    const message = "Vous n'avez pas les droits pour créer un article";
+  if (req.userRole !== "admin" || req.userRole !== "modoParc") {
+    const message = "Vous n'avez pas les droits pour update un parc";
     return res.status(401).json({ message });
   }
   const nom = req.body.nom;
