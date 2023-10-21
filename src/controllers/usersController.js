@@ -1,18 +1,26 @@
-const { User } = require("../db/sequelize");
+const { User, Token } = require("../db/sequelize");
 
 exports.deleteUser = (req, res, next) => {
   if (req.userRole !== "admin") {
     const message = "Vous n'avez pas les droits pour supprimer un utilisateurs";
     return res.status(401).json({ message });
   }
-  User.destroy({
-    where: {
-      id: req.params.id,
-    },
-  })
-    .then((user) => {
-      const message = "L'utilisateur a bien été supprimé";
-      return res.json({ message, data: user });
+  Token.destroy({ where: { ref_user: req.params.id } })
+    .then((_) => {
+      User.destroy({
+        where: {
+          id: req.params.id,
+        },
+      })
+        .then((user) => {
+          const message = "L'utilisateur a bien été supprimé";
+          return res.json({ message, data: user });
+        })
+        .catch((error) => {
+          const message =
+            "L'utilisateur n'a pas pu être supprimé. Réessayez dans quelques instants";
+          return res.json({ message, data: error });
+        });
     })
     .catch((error) => {
       const message =

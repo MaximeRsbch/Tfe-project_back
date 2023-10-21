@@ -84,23 +84,21 @@ exports.createPark = async (req, res) => {
 
   if (!id) {
     res.status(500).json({ message: "Veuillez remplir l'id" });
-  }
-
-  console.log(req.body);
-
-  try {
-    await Parcs.create({
-      id,
-      nom,
-      beginHour,
-      endHour,
-      latitude,
-      longitude,
-      ticketPrice,
-    });
-    res.status(200).json({ message: "Succès" });
-  } catch (e) {
-    res.status(500).json({ message: e.message });
+  } else {
+    try {
+      await Parcs.create({
+        id,
+        nom,
+        beginHour,
+        endHour,
+        latitude,
+        longitude,
+        ticketPrice,
+      });
+      res.status(200).json({ message: "Succès" });
+    } catch (e) {
+      res.status(500).json({ message: e.message });
+    }
   }
 };
 

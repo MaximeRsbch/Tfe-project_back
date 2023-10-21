@@ -61,7 +61,7 @@ imgAttr.belongsTo(Attraction, { foreignKey: "ref_attraction" });
 Attraction.hasMany(imgAttr, { foreignKey: "ref_attraction" });
 
 Token.belongsTo(User, { foreignKey: "ref_user" });
-User.hasOne(Token, { foreignKey: "ref_user" });
+User.hasOne(Token, { foreignKey: "ref_user", onDelete: "cascade" });
 
 const initDb = () => {
   return sequelize.sync({ force: false }).then((_) => {
