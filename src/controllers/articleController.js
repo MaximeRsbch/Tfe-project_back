@@ -1,4 +1,4 @@
-const { Article, Comment } = require("../db/sequelize.js");
+const { Article, CommentArticles } = require("../db/sequelize.js");
 const fs = require("fs");
 
 exports.createArticle = (req, res, next) => {
@@ -64,7 +64,7 @@ exports.getArticles = (req, res, next) => {
 
   if (id) {
     Article.findOne({ where: { id: id } }).then((article) => {
-      Comment.findAll({ where: { ref_article: id } })
+      CommentArticles.findAll({ where: { ref_article: id } })
         .then((comments) => {
           article.comments = comments;
           const message = "L'article a été récupéré avec succès";

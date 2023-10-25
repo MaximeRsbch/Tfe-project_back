@@ -4,7 +4,9 @@ const parcCtrl = require("../controllers/parcsController.js");
 
 router.get("/all/queuetime", parcCtrl.getParksWithQueueTime);
 router.get("/all", parcCtrl.getAllInformations);
-router.get("/:id?", parcCtrl.getPark);
+// router.get("/:id?", parcCtrl.getPark);
+router.get("/:id", parcCtrl.getOnePark);
+router.get("/", parcCtrl.getAllParcs);
 router.post("/", parcCtrl.createPark);
 router.put("/", parcCtrl.updatePark);
 router.delete("/:id", parcCtrl.deletePark);

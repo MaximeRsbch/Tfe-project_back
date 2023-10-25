@@ -103,7 +103,7 @@ exports.createPark = async (req, res) => {
 };
 
 exports.updatePark = async (req, res) => {
-  if (req.userRole !== "admin" || req.userRole !== "modoParc") {
+  if (req.userRole !== "admin" && req.userRole !== "modoParc") {
     const message = "Vous n'avez pas les droits pour update un parc";
     return res.status(401).json({ message });
   }
@@ -170,5 +170,37 @@ exports.getAllInformations = async (req, res) => {
     .catch((err) => {
       console.error(err);
       res.status(500).json({ message: err.message });
+    });
+};
+
+exports.getOnePark = async (req, res) => {
+  const id = req.params.id;
+
+  Parcs.findOne({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((user) => {
+      const message = "Le parc a bien été trouvé";
+      return res.json({ message, data: user });
+    })
+    .catch((error) => {
+      const message =
+        "Le parc n'a pas pu être trouvé. Réessayez dans quelques instants";
+      return res.json({ message, data: error });
+    });
+};
+
+exports.getAllParcs = async (req, res) => {
+  Parcs.findAll()
+    .then((users) => {
+      const message = "La liste des parcs a bien été récupérée";
+      return res.json({ message, data: users });
+    })
+    .catch((error) => {
+      const message =
+        "La liste des parcs n'a pas pu être récupérée. Réessayez dans quelques instants";
+      return res.json({ message, data: error });
     });
 };
