@@ -15,6 +15,7 @@ const TokenModel = require("../models/token.js");
 
 const sequelize = new Sequelize("tfe", "root", "", {
   host: "localhost",
+  port: 3306,
   dialect: "mariadb",
   dialectOptions: {
     timezone: "Etc/GMT-2",

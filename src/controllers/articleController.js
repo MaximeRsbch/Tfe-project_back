@@ -18,7 +18,7 @@ exports.createArticle = (req, res, next) => {
   })
     .then((article) => {
       const message = "L'article a été créé avec succès";
-      return res.json({ message });
+      return res.json({ message, data: article });
     })
     .catch((e) => {
       const message =
