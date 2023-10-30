@@ -7,9 +7,7 @@ exports.deleteOneComment = (req, res, next) => {
     },
   })
     .then((comment) => {
-      res.json(comment);
-      const message = "Le commentaire a bien été supprimé";
-      return res.json({ message, data: comment });
+      res.json({ message: "Commentaire supprimé" });
     })
     .catch((err) => {
       console.log(err);

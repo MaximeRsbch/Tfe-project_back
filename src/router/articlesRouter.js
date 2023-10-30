@@ -45,4 +45,6 @@ router.delete("/:id", articlesCtrl.deleteArticle);
 
 router.get("/:id?", articlesCtrl.getArticles);
 
+router.put("/:id", upload.single("img"), articlesCtrl.updateArticle);
+
 module.exports = router;
