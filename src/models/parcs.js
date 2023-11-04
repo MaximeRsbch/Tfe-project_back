@@ -58,5 +58,14 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
     },
+    legende: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        notEmpty: {
+          msg: "La légende ne peut pas être vide.",
+        },
+      },
+    },
   });
 };

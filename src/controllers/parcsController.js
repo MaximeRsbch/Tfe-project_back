@@ -81,6 +81,7 @@ exports.createPark = async (req, res) => {
   const latitude = req.body.latitude;
   const longitude = req.body.longitude;
   const ticketPrice = req.body.ticketPrice;
+  const legende = req.body.legende;
 
   if (!id) {
     res.status(500).json({ message: "Veuillez remplir l'id" });
@@ -94,6 +95,7 @@ exports.createPark = async (req, res) => {
         latitude,
         longitude,
         ticketPrice,
+        legende,
       });
       res.status(200).json({ message: "Succès" });
     } catch (e) {
@@ -113,6 +115,7 @@ exports.updatePark = async (req, res) => {
   const longitude = req.body.longitude;
   const latitude = req.body.latitude;
   const ticketPrice = req.body.ticketPrice;
+  const legende = req.body.legende;
 
   const id = req.body.id;
 
@@ -125,6 +128,7 @@ exports.updatePark = async (req, res) => {
         latitude,
         longitude,
         ticketPrice,
+        legende,
       },
       { where: { id } }
     );
