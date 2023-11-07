@@ -32,21 +32,26 @@ exports.createImgAttraction = (req, res, next) => {
     imagePath = req.file.path;
   }
 
+  console.log(id);
+  console.log(imagePath);
+
   Attraction.findOne({
     where: {
       id: id,
     },
   }).then((attraction) => {
+    console.log(attraction);
     if (attraction === null) {
       res.status(500).json({ message: "Attraction non trouvée" });
     } else {
       imgAttr
         .create({
-          img_url: imagePath,
+          url_img: imagePath,
           ref_attraction: id,
         })
         .then((img) => {
           res.status(201).json(img);
+          console.log(img);
         })
         .catch((err) => {
           console.log(err);
