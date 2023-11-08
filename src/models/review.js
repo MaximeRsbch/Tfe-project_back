@@ -1,27 +1,36 @@
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define("Review", {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    rating: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: "Le rating ne peut pas être vide.",
+  return sequelize.define(
+    "Review",
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      rating: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Le rating ne peut pas être vide.",
+          },
         },
       },
-    },
-    comment: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: "Le commentaire ne peut pas être vide.",
-        },
+      ref_user: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      ref_attraction: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
     },
-  });
+    {
+      indexes: [
+        {
+          fields: ["ref_user", "ref_attraction"],
+        },
+      ],
+    }
+  );
 };

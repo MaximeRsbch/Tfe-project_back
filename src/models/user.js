@@ -13,7 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
     },
-
+    // isVerified: {
+    //   type: DataTypes.BOOLEAN,
+    //   defaultValue: false,
+    // },
     username: {
       type: DataTypes.STRING,
       unique: {
