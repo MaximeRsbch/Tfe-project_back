@@ -58,3 +58,18 @@ exports.updateReview = async (req, res) => {
       res.status(500).json(err);
     });
 };
+
+exports.findAllReviews = (req, res, next) => {
+  Review.findAll({
+    where: {
+      ref_attraction: req.params.id,
+    },
+  })
+    .then((reviews) => {
+      res.json({ data: reviews });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+};

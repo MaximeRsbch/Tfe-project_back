@@ -8,4 +8,6 @@ router.delete("/:id", reviewCtrl.deleteReview);
 
 router.put("/:id", reviewCtrl.updateReview);
 
+router.get("/:id", reviewCtrl.findAllReviews);
+
 module.exports = router;

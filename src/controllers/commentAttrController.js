@@ -20,7 +20,7 @@ exports.deleteOneComment = (req, res, next) => {
 exports.findAllComments = (req, res, next) => {
   CommentAttr.findAll({
     where: {
-      ref_article: req.params.id,
+      ref_attraction: req.params.id,
     },
   })
     .then((comments) => {
@@ -35,7 +35,7 @@ exports.findAllComments = (req, res, next) => {
 exports.writeCommment = (req, res, next) => {
   const content = req.body.content;
   const ref_user = req.body.ref_user;
-  const ref_attraction = req.body.ref_article;
+  const ref_attraction = req.body.ref_attraction;
 
   User.findOne({
     id: ref_user,
@@ -47,7 +47,7 @@ exports.writeCommment = (req, res, next) => {
         CommentAttr.create({
           content: content,
           ref_user: ref_user,
-          ref_article: ref_attraction,
+          ref_attraction: ref_attraction,
         })
           .then((comment) => {
             res.status(201).json(comment);

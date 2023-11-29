@@ -19,6 +19,7 @@ const parcRouter = require("./src/router/parcsRouter.js");
 const articleRouter = require("./src/router/articlesRouter.js");
 const attractionRouter = require("./src/router/attractionsRouter.js");
 const typeAttrRouter = require("./src/router/typesAttractionRouter.js");
+const reviewRouter = require("./src/router/reviewRouter.js");
 
 global.__basedir = __dirname;
 
@@ -44,6 +45,7 @@ app
   .use("/api/users", usersRouter)
   .use("/api/parcs", parcRouter)
   .use("/api/articles", articleRouter)
+  .use("/api/reviews", reviewRouter)
   .use("/api/attractions", attractionRouter)
   .use("/api/typesattr", typeAttrRouter)
   .use("/api/auth", authRouter);
