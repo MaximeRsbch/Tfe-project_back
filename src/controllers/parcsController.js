@@ -198,9 +198,9 @@ exports.getOnePark = async (req, res) => {
 
 exports.getAllParcs = async (req, res) => {
   Parcs.findAll()
-    .then((users) => {
+    .then((parcs) => {
       const message = "La liste des parcs a bien été récupérée";
-      return res.json({ message, data: users });
+      return res.json({ message, data: parcs });
     })
     .catch((error) => {
       const message =

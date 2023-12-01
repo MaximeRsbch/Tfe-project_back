@@ -47,7 +47,8 @@ router.post(
 );
 
 router.post("/", attractionCtrl.createAttraction);
-router.get("/:id?", attractionCtrl.findAttraction);
+router.get("/", attractionCtrl.findAllAttractions);
+router.get("/:id/all", attractionCtrl.findAttraction);
 router.put("/:id", attractionCtrl.updateAttraction);
 router.delete("/:id", attractionCtrl.deleteAttraction);
 
