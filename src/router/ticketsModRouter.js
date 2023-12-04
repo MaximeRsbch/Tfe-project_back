@@ -6,3 +6,5 @@ router.get("/:id", ticketsModCtrl.getAllTicketsMod);
 router.post("/", ticketsModCtrl.createTicketsMod);
 router.delete("/:id", ticketsModCtrl.deleteTicketsMod);
 router.put("/:id", ticketsModCtrl.updateTicketsMod);
+
+module.exports = router;

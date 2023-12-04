@@ -39,6 +39,8 @@ function checkFileType(file, cb) {
   }
 }
 
-router.post("/", restaurantCtrl.createRestaurant);
+router.post("/", upload.single("img"), restaurantCtrl.createRestaurant);
 router.get("/:id", restaurantCtrl.getAllRestaurants);
 router.delete("/:id", restaurantCtrl.deleteRestaurant);
+
+module.exports = router;

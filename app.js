@@ -20,10 +20,10 @@ const articleRouter = require("./src/router/articlesRouter.js");
 const attractionRouter = require("./src/router/attractionsRouter.js");
 const typeAttrRouter = require("./src/router/typesAttractionRouter.js");
 const reviewRouter = require("./src/router/reviewRouter.js");
-const RestaurantRouter = require("./src/router/restaurantRouter.js");
-const ToilettesRouter = require("./src/router/toilettesRouter.js");
-const MagasinsRouter = require("./src/router/magasinsRouter.js");
-const TicketsModRouter = require("./src/router/ticketsModRouter.js");
+const restaurantRouter = require("./src/router/restaurantRouter.js");
+const toilettesRouter = require("./src/router/toilettesRouter.js");
+const magasinsRouter = require("./src/router/magasinsRouter.js");
+const ticketsModRouter = require("./src/router/ticketsModRouter.js");
 
 global.__basedir = __dirname;
 
@@ -52,10 +52,10 @@ app
   .use("/api/reviews", reviewRouter)
   .use("/api/attractions", attractionRouter)
   .use("/api/typesattr", typeAttrRouter)
-  .use("/api/restaurants", RestaurantRouter)
-  .use("/api/toilettes", ToilettesRouter)
-  .use("/api/magasins", MagasinsRouter)
-  .use("/api/ticketsmod", TicketsModRouter)
+  .use("/api/restaurants", restaurantRouter)
+  .use("/api/toilettes", toilettesRouter)
+  .use("/api/magasins", magasinsRouter)
+  .use("/api/ticketsmod", ticketsModRouter)
   .use("/api/auth", authRouter);
 
 sequelize.initDb();
