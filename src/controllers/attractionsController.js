@@ -33,7 +33,7 @@ exports.createImgAttraction = (req, res, next) => {
   }
 
   console.log(id);
-  console.log(imagePath);
+  console.log(req.file);
 
   Attraction.findOne({
     where: {

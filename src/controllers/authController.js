@@ -32,7 +32,7 @@ exports.login = (req, res, next) => {
             { id_user: user.id, role: user.role },
             privateKey,
             {
-              expiresIn: "24h",
+              expiresIn: "1h",
             }
           );
 
