@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const restaurantCtrl = require("../controllers/restaurantController.js");
+const magasinsCtrl = require("../controllers/magasinsController");
 const multer = require("multer");
 const path = require("path");
 
@@ -39,8 +39,8 @@ function checkFileType(file, cb) {
   }
 }
 
-router.post("/", upload.single("img"), restaurantCtrl.createRestaurant);
-router.get("/:id", restaurantCtrl.getAllRestaurants);
-router.delete("/:id", restaurantCtrl.deleteRestaurant);
+router.post("/", upload.single("img"), magasinsCtrl.createMagasins);
+router.get("/:id", magasinsCtrl.getAllMagasins);
+router.delete("/:id", magasinsCtrl.deleteMagasins);
 
 module.exports = router;

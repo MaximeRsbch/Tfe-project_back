@@ -1,4 +1,10 @@
-const { User, CommentArticles, CommentAttr } = require("../db/sequelize");
+const {
+  User,
+  CommentArticles,
+  CommentAttr,
+  TicketsMod,
+} = require("../db/sequelize");
+const ticketsMod = require("../models/ticketsMod");
 
 exports.getAllTicketsMod = (req, res, next) => {
   const id = req.params.id;
@@ -39,6 +45,29 @@ exports.getAllTicketsMod = (req, res, next) => {
   }
 };
 
+exports.getTicketsMod = (req, res, next) => {
+  TicketsMod.findAll({
+    include: [
+      {
+        model: User,
+      },
+      {
+        model: CommentArticles,
+      },
+      {
+        model: CommentAttr,
+      },
+    ],
+  })
+    .then((rest) => {
+      res.json(rest);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+};
+
 exports.createTicketsMod = (req, res, next) => {
   const id = req.body.id;
   const title = req.body.title;
@@ -47,32 +76,16 @@ exports.createTicketsMod = (req, res, next) => {
   const ref_commentArticles = req.body.ref_commentArticles;
   const ref_commentAttr = req.body.ref_commentAttr;
 
-  TicketsMod.findOne({
-    where: {
-      id: id,
-    },
+  TicketsMod.create({
+    id: id,
+    title: title,
+    description: description,
+    ref_user: ref_user,
+    ref_commentArticles: ref_commentArticles,
+    ref_commentAttr: ref_commentAttr,
   })
-    .then((attr) => {
-      if (attr) {
-        const message = "Le ticket existe déjà";
-        return res.status(409).json({ message });
-      }
-
-      TicketsMod.create({
-        id: id,
-        title: title,
-        description: description,
-        ref_user: ref_user,
-        ref_commentArticles: ref_commentArticles,
-        ref_commentAttr: ref_commentAttr,
-      })
-        .then((data) => {
-          res.status(201).json(data);
-        })
-        .catch((err) => {
-          console.error(err);
-          res.status(500).json({ message: err.message });
-        });
+    .then((data) => {
+      res.status(201).json(data);
     })
     .catch((err) => {
       console.error(err);
