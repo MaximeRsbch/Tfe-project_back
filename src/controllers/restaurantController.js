@@ -45,9 +45,9 @@ exports.createRestaurant = (req, res, next) => {
   const longitude = req.body.longitude;
   const beginHour = req.body.beginHour;
   const endHour = req.body.endHour;
-  const img_url = req.body.img_url;
+  const carte_img = req.body.carte_img;
   const description = req.body.description;
-  const is_open = req.body.is_open;
+  const showResto = req.body.showResto;
 
   const parc = req.body.parc;
 
@@ -67,9 +67,9 @@ exports.createRestaurant = (req, res, next) => {
           longitude: longitude,
           beginHour: beginHour,
           endHour: endHour,
-          img_url: img_url,
+          carte_img: carte_img,
           description: description,
-          is_open: is_open,
+          showResto: true,
           ref_parc: parc,
         })
           .then((attr) => {

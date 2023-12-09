@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      img_url: {
+      carte_img: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
@@ -61,6 +61,7 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+
       description: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -70,10 +71,16 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      is_open: {
+      showResto: {
         type: DataTypes.BOOLEAN,
-        allowNull: true,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Le statut ne peut pas être vide.",
+          },
+        },
       },
+
       ref_parc: {
         type: DataTypes.INTEGER,
         allowNull: false,
