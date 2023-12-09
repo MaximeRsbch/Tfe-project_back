@@ -15,6 +15,8 @@ exports.createArticle = (req, res, next) => {
     title: req.body.title,
     content: req.body.content,
     img_url: imagePath,
+
+    ref_parc: req.body.ref_parc,
   })
     .then((article) => {
       const message = "L'article a été créé avec succès";
@@ -124,6 +126,34 @@ exports.getArticles = (req, res, next) => {
           return res.json({ message, data: error });
         });
     });
+  } else {
+    Article.findAll()
+      .then((articles) => {
+        const message = "La liste des articles a été récupérée avec succès";
+        return res.json({ message, data: articles });
+      })
+      .catch((error) => {
+        const message =
+          "La liste des articles n'a pas pu être récupérée. Réessayez dans quelques instants";
+        return res.json({ message, data: error });
+      });
+  }
+};
+
+exports.getAllArticles = (req, res, next) => {
+  const id = req.params.id;
+
+  if (id) {
+    Article.findAll({ where: { ref_parc: id } })
+      .then((articles) => {
+        const message = "La liste des articles a été récupérée avec succès";
+        return res.json({ message, data: articles });
+      })
+      .catch((error) => {
+        const message =
+          "La liste des articles n'a pas pu être récupérée. Réessayez dans quelques instants";
+        return res.json({ message, data: error });
+      });
   } else {
     Article.findAll()
       .then((articles) => {

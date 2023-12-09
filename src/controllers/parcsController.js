@@ -74,6 +74,12 @@ exports.createPark = async (req, res) => {
     const message = "Vous n'avez pas les droits pour créer un parc";
     return res.status(401).json({ message });
   }
+
+  let imagePath = null;
+
+  if (req.file) {
+    imagePath = req.file.path;
+  }
   const id = req.body.id;
   const nom = req.body.nom;
   const beginHour = req.body.beginHour;
@@ -96,6 +102,7 @@ exports.createPark = async (req, res) => {
         longitude,
         ticketPrice,
         legende,
+        imagePath,
       });
       res.status(200).json({ message: "Succès" });
     } catch (e) {
