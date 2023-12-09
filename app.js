@@ -26,6 +26,7 @@ const magasinsRouter = require("./src/router/magasinsRouter.js");
 const ticketsModRouter = require("./src/router/ticketsModRouter.js");
 const EvenementRouter = require("./src/router/evenementRouter.js");
 const FavorisRouter = require("./src/router/favorisRouter.js");
+const SecoursRouter = require("./src/router/secoursRouter.js");
 
 global.__basedir = __dirname;
 
@@ -60,6 +61,7 @@ app
   .use("/api/ticketsmod", ticketsModRouter)
   .use("/api/evenements", EvenementRouter)
   .use("/api/favoris", FavorisRouter)
+  .use("/api/secours", SecoursRouter)
   .use("/api/auth", authRouter);
 
 sequelize.initDb();
