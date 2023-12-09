@@ -17,6 +17,7 @@ const ToilettesModel = require("../models/toilettes.js");
 const MagasinsModel = require("../models/magasins.js");
 const TicketsModModel = require("../models/ticketsMod.js");
 const EvenementModel = require("../models/evenement.js");
+const FavorisModel = require("../models/favoris.js");
 
 const sequelize = new Sequelize("tfe", "root", "", {
   host: "localhost",
@@ -43,6 +44,7 @@ const Toilettes = ToilettesModel(sequelize, DataTypes);
 const Magasins = MagasinsModel(sequelize, DataTypes);
 const TicketsMod = TicketsModModel(sequelize, DataTypes);
 const Evenement = EvenementModel(sequelize, DataTypes);
+const Favoris = FavorisModel(sequelize, DataTypes);
 
 CommentArticles.belongsTo(User, { foreignKey: "ref_user" });
 CommentArticles.belongsTo(Article, { foreignKey: "ref_article" });
@@ -92,6 +94,11 @@ CommentAttr.hasMany(TicketsMod, { foreignKey: "ref_commentAttr" });
 Evenement.belongsTo(Parcs, { foreignKey: "ref_parc" });
 Parcs.hasMany(Evenement, { foreignKey: "ref_parc" });
 
+Favoris.belongsTo(User, { foreignKey: "ref_user" });
+User.hasMany(Favoris, { foreignKey: "ref_user" });
+Favoris.belongsTo(Attraction, { foreignKey: "ref_attraction" });
+Attraction.hasMany(Favoris, { foreignKey: "ref_attraction" });
+
 const initDb = () => {
   return sequelize.sync({ force: false }).then((_) => {
     bcrypt.hash("admin", 10).then((hash) =>
@@ -131,4 +138,5 @@ module.exports = {
   Magasins,
   TicketsMod,
   Evenement,
+  Favoris,
 };
