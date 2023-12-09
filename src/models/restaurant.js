@@ -74,6 +74,7 @@ module.exports = (sequelize, DataTypes) => {
       showResto: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
+        defaultValue: true,
         validate: {
           notEmpty: {
             msg: "Le statut ne peut pas être vide.",

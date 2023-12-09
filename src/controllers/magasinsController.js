@@ -47,7 +47,6 @@ exports.createMagasins = (req, res, next) => {
   const endHour = req.body.endHour;
   const img_url = req.body.img_url;
   const description = req.body.description;
-  const is_open = req.body.is_open;
 
   const parc = req.body.parc;
 
@@ -69,7 +68,7 @@ exports.createMagasins = (req, res, next) => {
           endHour: endHour,
           img_url: img_url,
           description: description,
-          is_open: is_open,
+
           ref_parc: parc,
         })
           .then((attr) => {

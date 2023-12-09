@@ -26,6 +26,11 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      showWC: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+      },
 
       ref_parc: {
         type: DataTypes.INTEGER,

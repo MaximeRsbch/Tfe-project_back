@@ -71,9 +71,10 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      is_open: {
+      showMagasins: {
         type: DataTypes.BOOLEAN,
-        allowNull: true,
+        allowNull: false,
+        defaultValue: true,
       },
       ref_parc: {
         type: DataTypes.INTEGER,
