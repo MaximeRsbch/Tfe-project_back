@@ -2,28 +2,23 @@ const { Info } = require("../db/sequelize.js");
 
 exports.getAllInfo = (req, res, next) => {
   const id = req.params.id;
-
   if (id) {
-    Info.findAll({ where: { ref_user: id } })
-      .then((info) => {
-        const message = "La liste des infos a été récupérée avec succès";
-        return res.json({ message, data: info });
+    Info.findAll({ where: { ref_parc: id } })
+      .then((data) => {
+        res.status(200).json(data);
       })
-      .catch((error) => {
-        const message =
-          "La liste des infos n'a pas pu être récupérée. Réessayez dans quelques instants";
-        return res.json({ message, data: error });
+      .catch((err) => {
+        console.error(err);
+        res.status(500).json({ message: err.message });
       });
   } else {
     Info.findAll()
-      .then((info) => {
-        const message = "La liste des infos a été récupérée avec succès";
-        return res.json({ message, data: info });
+      .then((attr) => {
+        res.json(attr);
       })
-      .catch((error) => {
-        const message =
-          "La liste des infos n'a pas pu être récupérée. Réessayez dans quelques instants";
-        return res.json({ message, data: error });
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
       });
   }
 };
