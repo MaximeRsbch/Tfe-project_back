@@ -34,6 +34,16 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      showCommentaires: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+        validate: {
+          notEmpty: {
+            msg: "Le choix de commentaire ne peut pas être vide.",
+          },
+        },
+      },
       ref_parc: {
         type: DataTypes.INTEGER,
         allowNull: true,

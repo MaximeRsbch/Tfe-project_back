@@ -5,6 +5,12 @@ const {
   imgAttr,
   Review,
   CommentAttr,
+  Restaurant,
+  Toilettes,
+  Magasins,
+  Evenement,
+  Secours,
+  Info,
 } = require("../db/sequelize");
 
 exports.getParksWithQueueTime = async (req, res) => {
@@ -89,6 +95,11 @@ exports.createPark = async (req, res) => {
   const ticketPrice = req.body.ticketPrice;
   const legende = req.body.legende;
 
+  const showWC = req.body.showWC;
+  const showResto = req.body.showResto;
+  const showMagasins = req.body.showMagasins;
+  const showCommentArticle = req.body.showCommentArticle;
+
   if (!id) {
     res.status(500).json({ message: "Veuillez remplir l'id" });
   } else {
@@ -103,6 +114,10 @@ exports.createPark = async (req, res) => {
         ticketPrice,
         legende,
         imagePath,
+        showWC,
+        showResto,
+        showMagasins,
+        showCommentArticle,
       });
       res.status(200).json({ message: "Succès" });
     } catch (e) {
@@ -124,6 +139,11 @@ exports.updatePark = async (req, res) => {
   const ticketPrice = req.body.ticketPrice;
   const legende = req.body.legende;
 
+  const showWC = req.body.showWC;
+  const showResto = req.body.showResto;
+  const showMagasins = req.body.showMagasins;
+  const showCommentArticle = req.body.showCommentArticle;
+
   const id = req.body.id;
 
   try {
@@ -136,6 +156,10 @@ exports.updatePark = async (req, res) => {
         longitude,
         ticketPrice,
         legende,
+        showWC,
+        showResto,
+        showMagasins,
+        showCommentArticle,
       },
       { where: { id } }
     );
@@ -170,6 +194,24 @@ exports.getAllInformations = async (req, res) => {
           },
           {
             model: CommentAttr,
+          },
+          {
+            model: Toilettes,
+          },
+          {
+            model: Magasins,
+          },
+          {
+            model: Restaurant,
+          },
+          {
+            model: Evenement,
+          },
+          {
+            model: Secours,
+          },
+          {
+            model: Info,
           },
         ],
       },

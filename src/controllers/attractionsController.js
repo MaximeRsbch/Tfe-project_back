@@ -79,6 +79,7 @@ exports.createAttraction = (req, res, next) => {
   const type = req.body.type;
   const parc = req.body.parc;
   const isFavorite = req.body.isFavorite;
+  const showCommentaires = req.body.showCommentaires;
 
   Attraction.findOne({
     where: {
@@ -100,6 +101,7 @@ exports.createAttraction = (req, res, next) => {
           ref_type: type,
           ref_parc: parc,
           isFavorite: isFavorite,
+          showCommentaires: showCommentaires,
         })
           .then((attr) => {
             res.status(201).json(attr);
@@ -187,6 +189,7 @@ exports.updateAttraction = (req, res, next) => {
   const latitude = req.body.latitude;
   const longitude = req.body.longitude;
   const description = req.body.description;
+  const showCommentaires = req.body.showCommentaires;
 
   Attraction.update(
     {
@@ -196,6 +199,7 @@ exports.updateAttraction = (req, res, next) => {
       latitude: latitude,
       longitude: longitude,
       description: description,
+      showCommentaires: showCommentaires,
     },
     {
       where: {

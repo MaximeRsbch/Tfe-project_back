@@ -15,6 +15,7 @@ exports.createArticle = (req, res, next) => {
     title: req.body.title,
     content: req.body.content,
     img_url: imagePath,
+    showCommentaires: req.body.showCommentaires,
 
     ref_parc: req.body.ref_parc,
   })
@@ -89,6 +90,7 @@ exports.updateArticle = (req, res, next) => {
           title: req.body.title,
           content: req.body.content,
           img_url: imagePath,
+          showCommentaires: req.body.showCommentaires,
         },
         { where: { id: req.params.id } }
       )

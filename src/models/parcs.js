@@ -76,5 +76,41 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
     },
+    showWC: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: true,
+      validate: {
+        notEmpty: {
+          msg: "Le champ ne peut pas être vide.",
+        },
+      },
+    },
+    showResto: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: true,
+      validate: {
+        notEmpty: {
+          msg: "Le champ ne peut pas être vide.",
+        },
+      },
+    },
+
+    showMagasins: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: true,
+      validate: {
+        notEmpty: {
+          msg: "Le champ ne peut pas être vide.",
+        },
+      },
+    },
+    showCommentArticle: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: true,
+    },
   });
 };
