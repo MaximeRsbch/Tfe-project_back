@@ -71,11 +71,6 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      showMagasins: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: true,
-      },
       ref_parc: {
         type: DataTypes.INTEGER,
         allowNull: false,

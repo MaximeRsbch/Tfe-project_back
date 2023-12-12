@@ -16,11 +16,7 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      showCommentArticle: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: true,
-      },
+      
       ref_user: {
         type: DataTypes.INTEGER,
         allowNull: false,
