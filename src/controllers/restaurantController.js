@@ -47,7 +47,6 @@ exports.createRestaurant = (req, res, next) => {
   const endHour = req.body.endHour;
   const carte_img = req.body.carte_img;
   const description = req.body.description;
-  const showResto = req.body.showResto;
 
   const parc = req.body.parc;
 
@@ -69,7 +68,6 @@ exports.createRestaurant = (req, res, next) => {
           endHour: endHour,
           carte_img: carte_img,
           description: description,
-          showResto: true,
           ref_parc: parc,
         })
           .then((attr) => {

@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       ref_parc: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         validate: {
           notEmpty: {
             msg: "La référence de parc ne peut pas être vide.",
