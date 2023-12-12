@@ -5,13 +5,15 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
       },
+
       ref_user: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
           notEmpty: {
-            msg: "L'id de l'utilisateur ne peut pas être vide.",
+            msg: "La référence de l'user ne peut pas être vide.",
           },
         },
       },
@@ -20,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notEmpty: {
-            msg: "L'id de l'évènement ne peut pas être vide.",
+            msg: "La référence de l'attraction ne peut pas être vide.",
           },
         },
       },

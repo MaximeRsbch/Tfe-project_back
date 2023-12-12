@@ -86,6 +86,11 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      isFavorite: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+        defaultValue: false,
+      },
     },
     {
       timestamps: false,

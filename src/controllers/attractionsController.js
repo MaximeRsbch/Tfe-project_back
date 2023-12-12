@@ -3,6 +3,7 @@ const {
   imgAttr,
   Review,
   CommentAttr,
+  Favoris,
 } = require("../db/sequelize.js");
 const axios = require("axios");
 
@@ -77,6 +78,7 @@ exports.createAttraction = (req, res, next) => {
 
   const type = req.body.type;
   const parc = req.body.parc;
+  const isFavorite = req.body.isFavorite;
 
   Attraction.findOne({
     where: {
@@ -97,6 +99,7 @@ exports.createAttraction = (req, res, next) => {
           description: description,
           ref_type: type,
           ref_parc: parc,
+          isFavorite: isFavorite,
         })
           .then((attr) => {
             res.status(201).json(attr);
@@ -156,6 +159,9 @@ exports.findAllAttractions = (req, res, next) => {
       },
       {
         model: CommentAttr,
+      },
+      {
+        model: Favoris,
       },
     ],
   })

@@ -29,25 +29,44 @@ exports.getAllFavoris = (req, res, next) => {
 };
 
 exports.createFavoris = (req, res, next) => {
-  if (req.userRole !== "admin" && req.userRole !== "modoParc") {
-    const message = "Vous n'avez pas les droits pour créer un favoris";
-    return res.status(401).json({ message });
-  }
+  Favoris.findOne({
+    where: {
+      ref_user: req.body.ref_user,
+      ref_attraction: req.body.ref_attraction,
+    },
+  }).then((favoris) => {
+    if (favoris) {
+      const message = "L'article a déjà été ajouté aux favoris";
+      return res.status(401).json({ message });
+    } else {
+      Favoris.create({
+        ref_user: req.body.ref_user,
+        ref_attraction: req.body.ref_attraction,
+      })
+        .then((favoris) => {
+          const message = "L'article a été créé avec succès";
+          return res.json({ message, data: favoris });
+        })
+        .catch((e) => {
+          const message =
+            "L'article n'a pas pu être créé. Réessayez dans quelques instants";
+          return res.status(500).json({ message, data: e });
+        });
+    }
+  });
+};
 
-  const ref_user = req.body.ref_user;
-  const ref_attraction = req.body.ref_attraction;
+exports.deleteFavoris = (req, res, next) => {
+  const id = req.params.id;
 
-  Favoris.create({
-    ref_user,
-    ref_attraction,
-  })
+  Favoris.destroy({ where: { id: id } })
     .then((favoris) => {
-      const message = "Le favoris a été créé avec succès";
+      const message = "Le favoris a été supprimé avec succès";
       return res.json({ message, data: favoris });
     })
     .catch((error) => {
       const message =
-        "Le favoris n'a pas pu être créé. Réessayez dans quelques instants";
+        "Le favoris n'a pas pu être supprimé. Réessayez dans quelques instants";
       return res.json({ message, data: error });
     });
 };
