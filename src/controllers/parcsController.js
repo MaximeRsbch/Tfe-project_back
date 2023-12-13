@@ -195,25 +195,25 @@ exports.getAllInformations = async (req, res) => {
           {
             model: CommentAttr,
           },
-          {
-            model: Toilettes,
-          },
-          {
-            model: Magasins,
-          },
-          {
-            model: Restaurant,
-          },
-          {
-            model: Evenement,
-          },
-          {
-            model: Secours,
-          },
-          {
-            model: Info,
-          },
         ],
+      },
+      {
+        model: Restaurant,
+      },
+      {
+        model: Toilettes,
+      },
+      {
+        model: Magasins,
+      },
+      {
+        model: Evenement,
+      },
+      {
+        model: Secours,
+      },
+      {
+        model: Info,
       },
     ],
   })
