@@ -29,6 +29,7 @@ const FavorisRouter = require("./src/router/favorisRouter.js");
 const SecoursRouter = require("./src/router/secoursRouter.js");
 const InfoRouter = require("./src/router/infoRouter.js");
 const ModoParcRouter = require("./src/router/modoParcRouter.js");
+const ModoRouter = require("./src/router/modoRouter.js");
 
 global.__basedir = __dirname;
 
@@ -66,6 +67,7 @@ app
   .use("/api/info", InfoRouter)
   .use("/api/secours", SecoursRouter)
   .use("/api/modoparc", ModoParcRouter)
+  .use("/api/modo", ModoRouter)
   .use("/api/auth", authRouter);
 
 sequelize.initDb();

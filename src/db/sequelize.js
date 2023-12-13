@@ -21,6 +21,7 @@ const FavorisModel = require("../models/favoris.js");
 const SecoursModel = require("../models/secours.js");
 const InfoModel = require("../models/info.js");
 const ModoParcModel = require("../models/modoParc.js");
+const ModoModel = require("../models/modo.js");
 
 const sequelize = new Sequelize("tfe", "root", "", {
   host: "localhost",
@@ -51,6 +52,7 @@ const Favoris = FavorisModel(sequelize, DataTypes);
 const Secours = SecoursModel(sequelize, DataTypes);
 const Info = InfoModel(sequelize, DataTypes);
 const ModoParc = ModoParcModel(sequelize, DataTypes);
+const Modo = ModoModel(sequelize, DataTypes);
 
 CommentArticles.belongsTo(User, { foreignKey: "ref_user" });
 CommentArticles.belongsTo(Article, { foreignKey: "ref_article" });
@@ -116,6 +118,11 @@ User.hasMany(ModoParc, { foreignKey: "ref_user" });
 ModoParc.belongsTo(Parcs, { foreignKey: "ref_parc" });
 Parcs.hasMany(ModoParc, { foreignKey: "ref_parc" });
 
+Modo.belongsTo(User, { foreignKey: "ref_user" });
+User.hasMany(Modo, { foreignKey: "ref_user" });
+Modo.belongsTo(Parcs, { foreignKey: "ref_parc" });
+Parcs.hasMany(Modo, { foreignKey: "ref_parc" });
+
 const initDb = () => {
   return sequelize.sync({ force: false }).then((_) => {
     bcrypt.hash("admin", 10).then((hash) =>
@@ -159,4 +166,5 @@ module.exports = {
   Secours,
   Info,
   ModoParc,
+  Modo,
 };
