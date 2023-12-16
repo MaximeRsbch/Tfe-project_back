@@ -26,40 +26,26 @@ exports.findAttractionQueueTime = (req, res, next) => {
 };
 
 exports.createImgAttraction = (req, res, next) => {
-  const id = req.body.id;
   let imagePath = null;
 
   if (req.file) {
     imagePath = req.file.path;
   }
 
-  console.log(id);
-  console.log(req.file);
-
-  Attraction.findOne({
-    where: {
-      id: id,
-    },
-  }).then((attraction) => {
-    console.log(attraction);
-    if (attraction === null) {
-      res.status(500).json({ message: "Attraction non trouvée" });
-    } else {
-      imgAttr
-        .create({
-          url_img: imagePath,
-          ref_attraction: id,
-        })
-        .then((img) => {
-          res.status(201).json(img);
-          console.log(img);
-        })
-        .catch((err) => {
-          console.log(err);
-          res.status(500).json(err);
-        });
-    }
-  });
+  imgAttr
+    .create({
+      img_url: imagePath,
+      ref_attraction: req.body.ref_attraction,
+    })
+    .then((img) => {
+      const message = "L'image a été créé avec succès";
+      return res.json({ message, data: img });
+    })
+    .catch((err) => {
+      const message =
+        "L'image n'a pas pu être créé. Réessayez dans quelques instants";
+      return res.status(500).json({ message, data: err });
+    });
 };
 
 exports.createAttraction = (req, res, next) => {

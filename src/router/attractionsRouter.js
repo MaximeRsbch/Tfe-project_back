@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
   filename: function (req, file, cb) {
     cb(
       null,
-      "img-article" + "-" + Date.now() + path.extname(file.originalname)
+      "img-attraction" + "-" + Date.now() + path.extname(file.originalname)
     );
   },
 });
@@ -40,16 +40,17 @@ function checkFileType(file, cb) {
 }
 
 router.get("/:id/queuetime", attractionCtrl.findAttractionQueueTime);
-router.post(
-  "/:id/img",
-  upload.single("img"),
-  attractionCtrl.createImgAttraction
-);
+
+router.post("/img", upload.single("img"), attractionCtrl.createImgAttraction);
 
 router.post("/", attractionCtrl.createAttraction);
+
 router.get("/", attractionCtrl.findAllAttractions);
+
 router.get("/:id/all", attractionCtrl.findAttraction);
+
 router.put("/:id", attractionCtrl.updateAttraction);
+
 router.delete("/:id", attractionCtrl.deleteAttraction);
 
 module.exports = router;

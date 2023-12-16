@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const sequelize = require("./src/db/sequelize.js");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 const port = 3000;
@@ -46,6 +47,7 @@ const corsConf = {
 app
   .use(bodyParser.json())
   .use(cors(corsConf))
+  .use("/public", express.static("public"))
   .use("/api", throughMiddleware.throughMiddleware)
   .use("/api/queuetime", queuetimeRouter) // à delete
   .use("/api/mapbox", mapboxRouter)

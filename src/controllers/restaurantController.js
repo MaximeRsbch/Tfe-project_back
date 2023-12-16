@@ -39,48 +39,28 @@ exports.createRestaurant = (req, res, next) => {
     return res.status(401).json({ message });
   }
 
-  const id = req.body.id;
-  const name = req.body.name;
-  const latitude = req.body.latitude;
-  const longitude = req.body.longitude;
-  const beginHour = req.body.beginHour;
-  const endHour = req.body.endHour;
-  const carte_img = req.body.carte_img;
-  const description = req.body.description;
+  let imagePath = null;
 
-  const parc = req.body.parc;
+  if (req.file) {
+    imagePath = req.file.path;
+  }
 
-  Restaurant.findOne({
-    where: {
-      id: id,
-    },
+  Restaurant.create({
+    name: req.body.name,
+    latitude: req.body.latitude,
+    longitude: req.body.longitude,
+    beginHour: req.body.beginHour,
+    endHour: req.body.endHour,
+    carte_img: imagePath,
+    description: req.body.description,
+    ref_parc: req.body.ref_parc,
   })
     .then((attr) => {
-      if (attr) {
-        res.status(500).json({ message: "Restaurant déjà existante" });
-      } else {
-        Restaurant.create({
-          id: id,
-          nom: name,
-          latitude: latitude,
-          longitude: longitude,
-          beginHour: beginHour,
-          endHour: endHour,
-          carte_img: carte_img,
-          description: description,
-          ref_parc: parc,
-        })
-          .then((attr) => {
-            res.status(201).json(attr);
-          })
-          .catch((err) => {
-            console.log(err);
-            res.status(500).json(err);
-          });
-      }
+      res.status(201).json(attr);
     })
-    .catch((error) => {
-      res.status(500).json({ error });
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
     });
 };
 

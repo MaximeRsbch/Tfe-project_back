@@ -7,12 +7,12 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      url_img: {
+      img_url: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: {
-            msg: "Le rating ne peut pas être vide.",
+            msg: "L'url de l'image ne peut pas être vide.",
           },
         },
       },
