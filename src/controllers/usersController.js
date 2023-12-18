@@ -94,7 +94,7 @@ exports.unmuteUser = (req, res, next) => {
 };
 
 exports.changeRole = (req, res, next) => {
-  if (req.userRole !== "admin") {
+  if (req.userRole !== "admin" && req.userRole !== "modoParc") {
     const message =
       "Vous n'avez pas les droits pour changer le rôle de cet user";
     return res.status(401).json({ message });

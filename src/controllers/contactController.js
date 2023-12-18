@@ -1,28 +1,16 @@
-const {
-  User,
-  CommentArticles,
-  CommentAttr,
-  TicketsMod,
-} = require("../db/sequelize");
-const ticketsMod = require("../models/ticketsMod");
+const { User, Contact } = require("../db/sequelize");
 
-exports.getAllTicketsMod = (req, res, next) => {
+exports.getAllContact = (req, res, next) => {
   const id = req.params.id;
 
   if (id) {
-    TicketsMod.findAll({
+    Contact.findAll({
       where: {
         ref_user: id,
       },
       include: [
         {
           model: User,
-        },
-        {
-          model: CommentArticles,
-        },
-        {
-          model: CommentAttr,
         },
       ],
     })
@@ -34,7 +22,7 @@ exports.getAllTicketsMod = (req, res, next) => {
         res.status(500).json({ message: err.message });
       });
   } else {
-    TicketsMod.findAll()
+    Contact.findAll()
       .then((rest) => {
         res.json(rest);
       })
@@ -45,17 +33,11 @@ exports.getAllTicketsMod = (req, res, next) => {
   }
 };
 
-exports.getTicketsMod = (req, res, next) => {
-  TicketsMod.findAll({
+exports.getContact = (req, res, next) => {
+  Contact.findAll({
     include: [
       {
         model: User,
-      },
-      {
-        model: CommentArticles,
-      },
-      {
-        model: CommentAttr,
       },
     ],
   })
@@ -68,21 +50,17 @@ exports.getTicketsMod = (req, res, next) => {
     });
 };
 
-exports.createTicketsMod = (req, res, next) => {
+exports.createContact = (req, res, next) => {
   const id = req.body.id;
   const title = req.body.title;
   const description = req.body.description;
   const ref_user = req.body.ref_user;
-  const ref_commentArticles = req.body.ref_commentArticles;
-  const ref_commentAttr = req.body.ref_commentAttr;
 
-  TicketsMod.create({
+  Contact.create({
     id: id,
     title: title,
     description: description,
     ref_user: ref_user,
-    ref_commentArticles: ref_commentArticles,
-    ref_commentAttr: ref_commentAttr,
   })
     .then((data) => {
       res.status(201).json(data);
@@ -93,15 +71,13 @@ exports.createTicketsMod = (req, res, next) => {
     });
 };
 
-exports.updateTicketsMod = (req, res, next) => {
+exports.updateContact = (req, res, next) => {
   const id = req.params.id;
   const title = req.body.title;
   const description = req.body.description;
   const ref_user = req.body.ref_user;
-  const ref_commentArticles = req.body.ref_commentArticles;
-  const ref_commentAttr = req.body.ref_commentAttr;
 
-  TicketsMod.findOne({
+  Contact.findOne({
     where: {
       id: id,
     },
@@ -112,13 +88,11 @@ exports.updateTicketsMod = (req, res, next) => {
         return res.status(404).json({ message });
       }
 
-      TicketsMod.update(
+      Contact.update(
         {
           title: title,
           description: description,
           ref_user: ref_user,
-          ref_commentArticles: ref_commentArticles,
-          ref_commentAttr: ref_commentAttr,
         },
         {
           where: {
@@ -140,10 +114,10 @@ exports.updateTicketsMod = (req, res, next) => {
     });
 };
 
-exports.deleteTicketsMod = (req, res, next) => {
+exports.deleteContact = (req, res, next) => {
   const id = req.params.id;
 
-  TicketsMod.findOne({
+  Contact.findOne({
     where: {
       id: id,
     },
@@ -154,7 +128,7 @@ exports.deleteTicketsMod = (req, res, next) => {
         return res.status(404).json({ message });
       }
 
-      TicketsMod.destroy({
+      Contact.destroy({
         where: {
           id: id,
         },

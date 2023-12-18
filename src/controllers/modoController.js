@@ -1,7 +1,7 @@
 const { Modo } = require("../db/sequelize.js");
 
 exports.createModo = (req, res, next) => {
-  if (req.userRole !== "admin") {
+  if (req.userRole !== "admin" && req.userRole !== "modoParc") {
     const message = "Vous n'avez pas les droits pour créer un modo";
     return res.status(401).json({ message });
   }

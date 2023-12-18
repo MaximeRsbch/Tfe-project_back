@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    "TicketsMod",
+    "Contact",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -37,22 +37,12 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-
-      ref_commentArticles: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
-
-      ref_commentAttr: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
     },
     {
       timestamps: false,
       indexes: [
         {
-          fields: ["ref_user", "ref_commentArticles", "ref_commentAttr"],
+          fields: ["ref_user"],
         },
       ],
     }
