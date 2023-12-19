@@ -1,36 +1,21 @@
 const { User, Contact } = require("../db/sequelize");
 
 exports.getAllContact = (req, res, next) => {
-  const id = req.params.id;
-
-  if (id) {
-    Contact.findAll({
-      where: {
-        ref_user: id,
+  Contact.findAll({
+    include: [
+      {
+        model: User,
       },
-      include: [
-        {
-          model: User,
-        },
-      ],
+    ],
+  })
+    .then((data) => {
+      res.status(200).json(data);
+      console.log(data);
     })
-      .then((data) => {
-        res.status(200).json(data);
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).json({ message: err.message });
-      });
-  } else {
-    Contact.findAll()
-      .then((rest) => {
-        res.json(rest);
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(500).json(err);
-      });
-  }
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ message: err.message });
+    });
 };
 
 exports.getContact = (req, res, next) => {

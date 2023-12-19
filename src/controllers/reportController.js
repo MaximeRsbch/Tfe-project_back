@@ -6,42 +6,26 @@ const {
 } = require("../db/sequelize");
 
 exports.getAllReport = (req, res, next) => {
-  const id = req.params.id;
-
-  if (id) {
-    Report.findAll({
-      where: {
-        ref_user: id,
+  Report.findAll({
+    include: [
+      {
+        model: User,
       },
-      include: [
-        {
-          model: User,
-        },
-        {
-          model: CommentArticles,
-        },
-        {
-          model: CommentAttr,
-        },
-      ],
+      {
+        model: CommentArticles,
+      },
+      {
+        model: CommentAttr,
+      },
+    ],
+  })
+    .then((data) => {
+      res.status(200).json(data);
     })
-      .then((data) => {
-        res.status(200).json(data);
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).json({ message: err.message });
-      });
-  } else {
-    Report.findAll()
-      .then((rest) => {
-        res.json(rest);
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(500).json(err);
-      });
-  }
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ message: err.message });
+    });
 };
 
 exports.getReport = (req, res, next) => {
