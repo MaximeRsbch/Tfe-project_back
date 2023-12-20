@@ -16,6 +16,15 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      content: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Le contenu ne peut pas être vide.",
+          },
+        },
+      },
       ref_user: {
         type: DataTypes.INTEGER,
         allowNull: false,

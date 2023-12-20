@@ -1,14 +1,16 @@
-const { Review } = require("../db/sequelize");
+const { Review, User } = require("../db/sequelize");
 
 exports.addReview = async (req, res) => {
   const id_user = req.body.id_user;
   const id_attraction = req.body.id_attraction;
   const note = req.body.note;
+  const content = req.body.content;
 
   Review.create({
     ref_user: id_user,
     ref_attraction: id_attraction,
     rating: note,
+    content: content,
   })
     .then((review) => {
       res.status(201).json(review);
@@ -64,6 +66,11 @@ exports.findAllReviews = (req, res, next) => {
     where: {
       ref_attraction: req.params.id,
     },
+    include: [
+      {
+        model: User,
+      },
+    ],
   })
     .then((reviews) => {
       res.json({ data: reviews });

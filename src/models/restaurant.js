@@ -71,6 +71,15 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      url_carte: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+          notEmpty: {
+            msg: "L'url de la carte ne peut pas être vide.",
+          },
+        },
+      },
 
       ref_parc: {
         type: DataTypes.INTEGER,
