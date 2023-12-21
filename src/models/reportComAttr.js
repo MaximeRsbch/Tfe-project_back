@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
 
-      ref_commentAttr: {
+      ref_review: {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
       indexes: [
         {
-          fields: ["ref_user", "ref_commentAttr"],
+          fields: ["ref_user", "ref_review"],
         },
       ],
     }

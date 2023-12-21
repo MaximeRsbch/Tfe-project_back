@@ -110,8 +110,8 @@ CommentArticles.hasMany(ReportComArticle, {
 
 ReportComAttr.belongsTo(User, { foreignKey: "ref_user" });
 User.hasMany(ReportComAttr, { foreignKey: "ref_user" });
-ReportComAttr.belongsTo(CommentAttr, { foreignKey: "ref_commentAttr" });
-CommentAttr.hasMany(ReportComAttr, { foreignKey: "ref_commentAttr" });
+ReportComAttr.belongsTo(Review, { foreignKey: "ref_review" });
+Review.hasMany(ReportComAttr, { foreignKey: "ref_review" });
 
 Evenement.belongsTo(Parcs, { foreignKey: "ref_parc" });
 Parcs.hasMany(Evenement, { foreignKey: "ref_parc" });

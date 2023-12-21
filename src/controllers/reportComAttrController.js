@@ -1,4 +1,4 @@
-const { User, ReportComAttr, CommentAttr } = require("../db/sequelize");
+const { User, ReportComAttr, Review } = require("../db/sequelize");
 
 exports.getAllReportAttr = (req, res, next) => {
   ReportComAttr.findAll({
@@ -7,7 +7,7 @@ exports.getAllReportAttr = (req, res, next) => {
         model: User,
       },
       {
-        model: CommentAttr,
+        model: Review,
       },
     ],
   })
@@ -27,7 +27,7 @@ exports.getReportAttr = (req, res, next) => {
         model: User,
       },
       {
-        model: CommentAttr,
+        model: Review,
       },
     ],
   })
@@ -45,14 +45,14 @@ exports.createReportAttr = (req, res, next) => {
   const title = req.body.title;
   const description = req.body.description;
   const ref_user = req.body.ref_user;
-  const ref_commentAttr = req.body.ref_commentAttr;
+  const ref_review = req.body.ref_review;
 
   ReportComAttr.create({
     id: id,
     title: title,
     description: description,
     ref_user: ref_user,
-    ref_commentAttr: ref_commentAttr,
+    ref_review: ref_review,
   })
     .then((data) => {
       res.status(201).json(data);
@@ -76,7 +76,7 @@ exports.updateReportAttr = (req, res, next) => {
   const title = req.body.title;
   const description = req.body.description;
   const ref_user = req.body.ref_user;
-  const ref_commentAttr = req.body.ref_commentAttr;
+  const ref_review = req.body.ref_review;
 
   ReportComAttr.update(
     {
@@ -84,7 +84,7 @@ exports.updateReportAttr = (req, res, next) => {
       title: title,
       description: description,
       ref_user: ref_user,
-      ref_commentAttr: ref_commentAttr,
+      ref_review: ref_review,
     },
     { where: { id: id } }
   )

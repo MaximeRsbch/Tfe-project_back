@@ -41,6 +41,9 @@ exports.findUsers = (req, res, next) => {
         {
           model: Favoris,
         },
+        {
+          model: Modo,
+        },
       ],
     })
       .then((user) => {
@@ -64,6 +67,30 @@ exports.findUsers = (req, res, next) => {
         return res.json({ message, data: error });
       });
   }
+};
+
+exports.findUsersById = (req, res, next) => {
+  const id = req.params.id;
+
+  User.findOne({
+    where: {
+      id: req.params.id,
+    },
+    include: [
+      {
+        model: Favoris,
+      },
+    ],
+  })
+    .then((user) => {
+      const message = "L'utilisateur a bien été trouvé";
+      return res.json({ message, data: user });
+    })
+    .catch((error) => {
+      const message =
+        "L'utilisateur n'a pas pu être trouvé. Réessayez dans quelques instants";
+      return res.json({ message, data: error });
+    });
 };
 
 exports.modifyUser = (req, res, next) => {
