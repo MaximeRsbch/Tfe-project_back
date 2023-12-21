@@ -16,7 +16,8 @@ const RestaurantModel = require("../models/restaurant.js");
 const ToilettesModel = require("../models/toilettes.js");
 const MagasinsModel = require("../models/magasins.js");
 const ContactModel = require("../models/contact.js");
-const ReportModel = require("../models/report.js");
+const ReportComArticleModel = require("../models/reportComArticle.js");
+const ReportComAttrModel = require("../models/reportComAttr.js");
 const EvenementModel = require("../models/evenement.js");
 const FavorisModel = require("../models/favoris.js");
 const SecoursModel = require("../models/secours.js");
@@ -48,7 +49,8 @@ const Restaurant = RestaurantModel(sequelize, DataTypes);
 const Toilettes = ToilettesModel(sequelize, DataTypes);
 const Magasins = MagasinsModel(sequelize, DataTypes);
 const Contact = ContactModel(sequelize, DataTypes);
-const Report = ReportModel(sequelize, DataTypes);
+const ReportComArticle = ReportComArticleModel(sequelize, DataTypes);
+const ReportComAttr = ReportComAttrModel(sequelize, DataTypes);
 const Evenement = EvenementModel(sequelize, DataTypes);
 const Favoris = FavorisModel(sequelize, DataTypes);
 const Secours = SecoursModel(sequelize, DataTypes);
@@ -97,12 +99,19 @@ Parcs.hasMany(Magasins, { foreignKey: "ref_parc" });
 Contact.belongsTo(User, { foreignKey: "ref_user" });
 User.hasMany(Contact, { foreignKey: "ref_user" });
 
-Report.belongsTo(User, { foreignKey: "ref_user" });
-User.hasMany(Report, { foreignKey: "ref_user" });
-Report.belongsTo(CommentArticles, { foreignKey: "ref_commentArticles" });
-CommentArticles.hasMany(Report, { foreignKey: "ref_commentArticles" });
-Report.belongsTo(CommentAttr, { foreignKey: "ref_commentAttr" });
-CommentAttr.hasMany(Report, { foreignKey: "ref_commentAttr" });
+ReportComArticle.belongsTo(User, { foreignKey: "ref_user" });
+User.hasMany(ReportComArticle, { foreignKey: "ref_user" });
+ReportComArticle.belongsTo(CommentArticles, {
+  foreignKey: "ref_commentArticles",
+});
+CommentArticles.hasMany(ReportComArticle, {
+  foreignKey: "ref_commentArticles",
+});
+
+ReportComAttr.belongsTo(User, { foreignKey: "ref_user" });
+User.hasMany(ReportComAttr, { foreignKey: "ref_user" });
+ReportComAttr.belongsTo(CommentAttr, { foreignKey: "ref_commentAttr" });
+CommentAttr.hasMany(ReportComAttr, { foreignKey: "ref_commentAttr" });
 
 Evenement.belongsTo(Parcs, { foreignKey: "ref_parc" });
 Parcs.hasMany(Evenement, { foreignKey: "ref_parc" });
@@ -172,5 +181,6 @@ module.exports = {
   ModoParc,
   Modo,
   Contact,
-  Report,
+  ReportComArticle,
+  ReportComAttr,
 };

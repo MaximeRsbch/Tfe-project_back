@@ -25,7 +25,8 @@ const restaurantRouter = require("./src/router/restaurantRouter.js");
 const toilettesRouter = require("./src/router/toilettesRouter.js");
 const magasinsRouter = require("./src/router/magasinsRouter.js");
 const ContactRouter = require("./src/router/contactRouter.js");
-const ReportRouter = require("./src/router/reportRouter.js");
+const ReportArticleRouter = require("./src/router/reportArticleRouter.js");
+const ReportAttractionRouter = require("./src/router/reportAttractionRouter.js");
 const EvenementRouter = require("./src/router/evenementRouter.js");
 const FavorisRouter = require("./src/router/favorisRouter.js");
 const SecoursRouter = require("./src/router/secoursRouter.js");
@@ -65,7 +66,8 @@ app
   .use("/api/toilettes", toilettesRouter)
   .use("/api/magasins", magasinsRouter)
   .use("/api/contact", ContactRouter)
-  .use("/api/report", ReportRouter)
+  .use("/api/reportArt", ReportArticleRouter)
+  .use("/api/reportAttr", ReportAttractionRouter)
   .use("/api/evenements", EvenementRouter)
   .use("/api/favoris", FavorisRouter)
   .use("/api/info", InfoRouter)

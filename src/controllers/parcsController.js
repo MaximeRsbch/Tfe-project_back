@@ -86,6 +86,7 @@ exports.createPark = async (req, res) => {
   if (req.file) {
     imagePath = req.file.path;
   }
+
   const id = req.body.id;
   const nom = req.body.nom;
   const beginHour = req.body.beginHour;
@@ -93,6 +94,7 @@ exports.createPark = async (req, res) => {
   const latitude = req.body.latitude;
   const longitude = req.body.longitude;
   const ticketPrice = req.body.ticketPrice;
+  const img_url = imagePath;
   const legende = req.body.legende;
 
   const showWC = req.body.showWC;
@@ -112,14 +114,15 @@ exports.createPark = async (req, res) => {
         latitude,
         longitude,
         ticketPrice,
+        img_url,
         legende,
-        imagePath,
         showWC,
         showResto,
         showMagasins,
         showCommentArticle,
+      }).then((data) => {
+        res.status(200).json({ message: "Succès", data });
       });
-      res.status(200).json({ message: "Succès" });
     } catch (e) {
       res.status(500).json({ message: e.message });
     }
