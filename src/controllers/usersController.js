@@ -1,4 +1,4 @@
-const { User, Token } = require("../db/sequelize");
+const { User, Token, Favoris } = require("../db/sequelize");
 
 exports.deleteUser = (req, res, next) => {
   if (req.userRole !== "admin") {
@@ -37,6 +37,11 @@ exports.findUsers = (req, res, next) => {
       where: {
         id: req.params.id,
       },
+      include: [
+        {
+          model: Favoris,
+        },
+      ],
     })
       .then((user) => {
         const message = "L'utilisateur a bien été trouvé";
