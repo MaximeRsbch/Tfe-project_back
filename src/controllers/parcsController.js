@@ -11,6 +11,7 @@ const {
   Evenement,
   Secours,
   Info,
+  ParcsCalendar,
 } = require("../db/sequelize");
 
 exports.getParksWithQueueTime = async (req, res) => {
@@ -259,4 +260,73 @@ exports.getAllParcs = async (req, res) => {
         "La liste des parcs n'a pas pu être récupérée. Réessayez dans quelques instants";
       return res.json({ message, data: error });
     });
+};
+
+exports.createCalendar = async (req, res) => {
+  const date = req.body.date;
+  const beginHour = req.body.beginHour;
+  const endHour = req.body.endHour;
+  const ref_parc = req.body.ref_parc;
+
+  try {
+    await ParcsCalendar.create({
+      date,
+      beginHour,
+      endHour,
+      ref_parc,
+    }).then((data) => {
+      res.status(200).json({ message: "Succès", data });
+    });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+};
+
+exports.getCalendar = async (req, res) => {
+  const ref_parc = req.params.ref_parc;
+
+  try {
+    ParcsCalendar.findAll({
+      where: {
+        ref_parc: ref_parc,
+      },
+    })
+      .then((data) => {
+        res.status(200).json(data);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).json({ message: err.message });
+      });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+};
+
+exports.getAllCalendar = (req, res, next) => {
+  const id = req.params.id;
+
+  if (id) {
+    ParcsCalendar.findAll({ where: { ref_parc: id } })
+      .then((calendar) => {
+        const message = "La liste des articles a été récupérée avec succès";
+        return res.json({ message, data: calendar });
+      })
+      .catch((error) => {
+        const message =
+          "La liste des articles n'a pas pu être récupérée. Réessayez dans quelques instants";
+        return res.json({ message, data: error });
+      });
+  } else {
+    ParcsCalendar.findAll()
+      .then((articles) => {
+        const message = "La liste des articles a été récupérée avec succès";
+        return res.json({ message, data: articles });
+      })
+      .catch((error) => {
+        const message =
+          "La liste des articles n'a pas pu être récupérée. Réessayez dans quelques instants";
+        return res.json({ message, data: error });
+      });
+  }
 };
