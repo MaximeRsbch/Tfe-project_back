@@ -70,3 +70,18 @@ exports.deleteFavoris = (req, res, next) => {
       return res.json({ message, data: error });
     });
 };
+
+exports.deleteAllFavoris = (req, res, next) => {
+  const id = req.body.id;
+
+  Favoris.destroy({ where: { ref_attraction: id } })
+    .then((favoris) => {
+      const message = "Le favoris a été supprimé avec succès";
+      return res.json({ message, data: favoris });
+    })
+    .catch((error) => {
+      const message =
+        "Le favoris n'a pas pu être supprimé. Réessayez dans quelques instants";
+      return res.json({ message, data: error });
+    });
+};

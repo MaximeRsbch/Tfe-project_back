@@ -94,7 +94,6 @@ module.exports = (sequelize, DataTypes) => {
       showCommentaires: {
         type: DataTypes.BOOLEAN,
         allowNull: true,
-        defaultValue: true,
       },
     },
     {

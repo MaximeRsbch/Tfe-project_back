@@ -53,15 +53,30 @@ exports.getAllModos = (req, res, next) => {
     });
 };
 
-exports.getAllModosByParc = (req, res, next) => {
-  Modo.findAll({ where: { ref_parc: req.params.id } })
-    .then((modo) => {
-      const message = "Les modos ont bien été trouvés";
-      return res.json({ message, data: modo });
-    })
-    .catch((error) => {
-      const message =
-        "Les modos n'ont pas pu être récupérés. Réessayez dans quelques instants";
-      return res.status(500).json({ message, data: error });
-    });
+exports.getModoById = (req, res, next) => {
+  const id = req.params.id;
+
+  if (id) {
+    Modo.findAll({ where: { ref_parc: id } })
+      .then((favoris) => {
+        const message = "La liste des favoris a été récupérée avec succès";
+        return res.json({ message, data: favoris });
+      })
+      .catch((error) => {
+        const message =
+          "La liste des favoris n'a pas pu être récupérée. Réessayez dans quelques instants";
+        return res.json({ message, data: error });
+      });
+  } else {
+    Modo.findAll()
+      .then((modo) => {
+        const message = "La liste des favoris a été récupérée avec succès";
+        return res.json({ message, data: modo });
+      })
+      .catch((error) => {
+        const message =
+          "La liste des favoris n'a pas pu être récupérée. Réessayez dans quelques instants";
+        return res.json({ message, data: error });
+      });
+  }
 };

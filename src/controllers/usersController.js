@@ -1,7 +1,7 @@
 const { User, Token, Favoris } = require("../db/sequelize");
 
 exports.deleteUser = (req, res, next) => {
-  if (req.userRole !== "admin") {
+  if (req.userRole !== "admin" || req.userRole !== "modo") {
     const message = "Vous n'avez pas les droits pour supprimer un utilisateurs";
     return res.status(401).json({ message });
   }

@@ -4,6 +4,7 @@ const {
   Review,
   CommentAttr,
   Favoris,
+  Parcs,
 } = require("../db/sequelize.js");
 const axios = require("axios");
 
@@ -115,6 +116,9 @@ exports.findAttraction = async (req, res) => {
         {
           model: Review,
         },
+        {
+          model: Parcs,
+        },
       ],
     })
       .then((data) => {
@@ -150,6 +154,9 @@ exports.findAllAttractions = (req, res, next) => {
       },
       {
         model: Favoris,
+      },
+      {
+        model: Parcs,
       },
     ],
   })
