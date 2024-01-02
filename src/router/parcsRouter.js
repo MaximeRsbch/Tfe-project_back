@@ -43,7 +43,6 @@ router.get("/:id", parcCtrl.getOnePark);
 router.get("/", parcCtrl.getAllParcs);
 router.post("/", upload.single("img"), parcCtrl.createPark);
 router.put("/", upload.single("img"), parcCtrl.updatePark);
-router.delete("/:id", parcCtrl.deletePark);
 router.get("/calendar/:id", parcCtrl.getAllCalendar);
 router.post("/calendar", parcCtrl.createCalendar);
 

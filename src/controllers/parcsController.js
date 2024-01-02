@@ -173,17 +173,6 @@ exports.updatePark = async (req, res) => {
   }
 };
 
-exports.deletePark = async (req, res) => {
-  const id = req.params.id;
-
-  try {
-    await Parcs.destroy({ where: { id } });
-    res.status(200).json({ message: "Succès" });
-  } catch (e) {
-    res.status(500).json({ message: e.message });
-  }
-};
-
 exports.getAllInformations = async (req, res) => {
   Parcs.findAll({
     include: [
