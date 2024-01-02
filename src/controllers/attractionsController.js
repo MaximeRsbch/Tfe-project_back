@@ -219,13 +219,46 @@ exports.deleteAttraction = (req, res, next) => {
       },
     })
     .then((_) => {
-      Attraction.destroy({
+      Favoris.destroy({
         where: {
-          id: id,
+          ref_attraction: id,
         },
       })
-        .then((attr) => {
-          res.json({ message: "Attraction supprimée" });
+        .then((_) => {
+          CommentAttr.destroy({
+            where: {
+              ref_attraction: id,
+            },
+          })
+            .then((_) => {
+              Review.destroy({
+                where: {
+                  ref_attraction: id,
+                },
+              })
+                .then((_) => {
+                  Attraction.destroy({
+                    where: {
+                      id: id,
+                    },
+                  })
+                    .then((_) => {
+                      res.json({ message: "Attraction supprimée" });
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                      res.status(500).json(err);
+                    });
+                })
+                .catch((err) => {
+                  console.log(err);
+                  res.status(500).json(err);
+                });
+            })
+            .catch((err) => {
+              console.log(err);
+              res.status(500).json(err);
+            });
         })
         .catch((err) => {
           console.log(err);
