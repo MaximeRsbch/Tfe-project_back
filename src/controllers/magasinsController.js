@@ -39,20 +39,16 @@ exports.createMagasins = (req, res, next) => {
     return res.status(401).json({ message });
   }
 
-  const id = req.body.id;
-  const name = req.body.name;
-  const latitude = req.body.latitude;
-  const longitude = req.body.longitude;
-  const beginHour = req.body.beginHour;
-  const endHour = req.body.endHour;
-  const img_url = req.body.img_url;
-  const description = req.body.description;
+  let imagePath = null;
 
-  const parc = req.body.parc;
+  if (req.file) {
+    imagePath = req.file.path;
+  }
 
+  const ref_parc = req.body.ref_parc;
   Magasins.findOne({
     where: {
-      id: id,
+      id: ref_parc,
     },
   })
     .then((attr) => {
@@ -60,16 +56,14 @@ exports.createMagasins = (req, res, next) => {
         res.status(500).json({ message: "Magasins déjà existante" });
       } else {
         Magasins.create({
-          id: id,
-          nom: name,
-          latitude: latitude,
-          longitude: longitude,
-          beginHour: beginHour,
-          endHour: endHour,
-          img_url: img_url,
-          description: description,
-
-          ref_parc: parc,
+          name: req.body.name,
+          latitude: req.body.latitude,
+          longitude: req.body.longitude,
+          beginHour: req.body.beginHour,
+          endHour: req.body.endHour,
+          img_url: imagePath,
+          description: req.body.description,
+          ref_parc: ref_parc,
         })
           .then((attr) => {
             res.status(201).json(attr);
@@ -82,6 +76,7 @@ exports.createMagasins = (req, res, next) => {
     })
     .catch((error) => {
       res.status(500).json({ error });
+      console.log(error);
     });
 };
 

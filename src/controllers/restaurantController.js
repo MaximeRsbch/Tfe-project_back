@@ -53,6 +53,7 @@ exports.createRestaurant = (req, res, next) => {
     endHour: req.body.endHour,
     carte_img: imagePath,
     description: req.body.description,
+    url_carte: req.body.url_carte,
     ref_parc: req.body.ref_parc,
   })
     .then((attr) => {
