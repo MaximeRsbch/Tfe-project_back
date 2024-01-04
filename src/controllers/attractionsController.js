@@ -14,14 +14,15 @@ exports.findAttractionQueueTime = (req, res, next) => {
   axios
     .get(`https://queue-times.com/parks/${id}/queue_times.json`)
     .then((response) => {
-      console.log(response.data.lands);
-      let attrList = null;
-      if (response.data.rides.length > 0) {
-        attrList = response.data.rides;
-        res.status(200).json(attrList);
-      } else if (response.data.lands) {
-        attrList = response.data.lands;
-        res.status(200).json(attrList);
+      let allAttractions = [];
+
+      if (response.data.rides.length === 0) {
+        response.data.lands.forEach((land) => {
+          allAttractions = allAttractions.concat(land.rides);
+        });
+        res.status(200).json(allAttractions);
+      } else {
+        res.status(200).json(response.data.rides);
       }
     });
 };
@@ -101,6 +102,7 @@ exports.createAttraction = (req, res, next) => {
     })
     .catch((error) => {
       res.status(500).json({ error });
+      console.log(error);
     });
 };
 
