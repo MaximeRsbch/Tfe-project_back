@@ -135,18 +135,17 @@ exports.updatePark = async (req, res) => {
     const message = "Vous n'avez pas les droits pour update un parc";
     return res.status(401).json({ message });
   }
+
   const nom = req.body.nom;
   const beginHour = req.body.beginHour;
   const endHour = req.body.endHour;
-  const longitude = req.body.longitude;
   const latitude = req.body.latitude;
+  const longitude = req.body.longitude;
   const ticketPrice = req.body.ticketPrice;
   const legende = req.body.legende;
-
   const showWC = req.body.showWC;
   const showResto = req.body.showResto;
   const showMagasins = req.body.showMagasins;
-  const showCommentArticle = req.body.showCommentArticle;
 
   const id = req.body.id;
 
@@ -163,11 +162,10 @@ exports.updatePark = async (req, res) => {
         showWC,
         showResto,
         showMagasins,
-        showCommentArticle,
       },
       { where: { id } }
     );
-    res.status(200).json({ message: "Succès" });
+    res.status(200).json({ message: "Succès", data: req.body });
   } catch (e) {
     res.status(500).json({ message: e.message });
   }

@@ -33,6 +33,25 @@ exports.getAllMagasins = (req, res, next) => {
   }
 };
 
+exports.getOneMagasins = (req, res, next) => {
+  const id = req.params.id;
+
+  Magasins.findOne({
+    where: {
+      id: id,
+    },
+  })
+    .then((user) => {
+      const message = "Le magasin a bien été trouvé";
+      return res.json({ message, data: user });
+    })
+    .catch((error) => {
+      const message =
+        "Le magasin n'a pas pu être trouvé. Réessayez dans quelques instants";
+      return res.json({ message, data: error });
+    });
+};
+
 exports.createMagasins = (req, res, next) => {
   if (req.userRole !== "admin" && req.userRole !== "modoParc") {
     const message = "Vous n'avez pas les droits pour créer une attraction";
@@ -100,4 +119,37 @@ exports.deleteMagasins = (req, res, next) => {
       console.log(err);
       res.status(500).json(err);
     });
+};
+
+exports.updateMagasins = async (req, res, next) => {
+  if (req.userRole !== "admin" && req.userRole !== "modoParc") {
+    const message = "Vous n'avez pas les droits pour update un parc";
+    return res.status(401).json({ message });
+  }
+
+  const name = req.body.name;
+  const latitude = req.body.latitude;
+  const longitude = req.body.longitude;
+  const beginHour = req.body.beginHour;
+  const endHour = req.body.endHour;
+  const description = req.body.description;
+
+  const id = req.body.id;
+
+  try {
+    await Magasins.update(
+      {
+        name,
+        latitude,
+        longitude,
+        beginHour,
+        endHour,
+        description,
+      },
+      { where: { id } }
+    );
+    res.status(200).json({ message: "Succès", data: req.body });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
 };

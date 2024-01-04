@@ -40,7 +40,9 @@ function checkFileType(file, cb) {
 }
 
 router.post("/", upload.single("img"), magasinsCtrl.createMagasins);
-router.get("/:id", magasinsCtrl.getAllMagasins);
+router.get("/all/:id", magasinsCtrl.getAllMagasins);
+router.put("/", upload.single("img"), magasinsCtrl.updateMagasins);
+router.get("/:id", magasinsCtrl.getOneMagasins);
 router.delete("/:id", magasinsCtrl.deleteMagasins);
 
 module.exports = router;

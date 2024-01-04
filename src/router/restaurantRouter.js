@@ -37,7 +37,9 @@ function checkFileType(file, cb) {
 }
 
 router.post("/", upload.single("img"), restaurantCtrl.createRestaurant);
-router.get("/:id", restaurantCtrl.getAllRestaurants);
+router.get("/all/:id", restaurantCtrl.getAllRestaurants);
+router.put("/", upload.single("img"), restaurantCtrl.updateRestaurant);
+router.get("/:id", restaurantCtrl.getOneRestaurant);
 router.delete("/:id", restaurantCtrl.deleteRestaurant);
 
 module.exports = router;
