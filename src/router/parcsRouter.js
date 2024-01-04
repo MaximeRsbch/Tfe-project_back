@@ -45,5 +45,6 @@ router.post("/", upload.single("img"), parcCtrl.createPark);
 router.put("/", upload.single("img"), parcCtrl.updatePark);
 router.get("/calendar/:id", parcCtrl.getAllCalendar);
 router.post("/calendar", parcCtrl.createCalendar);
+router.delete("/calendar/:id", parcCtrl.deleteCalendar);
 
 module.exports = router;

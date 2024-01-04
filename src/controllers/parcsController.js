@@ -250,17 +250,32 @@ exports.getAllParcs = async (req, res) => {
 };
 
 exports.createCalendar = async (req, res) => {
-  const date = req.body.date;
-  const beginHour = req.body.beginHour;
-  const endHour = req.body.endHour;
-  const ref_parc = req.body.ref_parc;
+  ParcsCalendar.create({
+    day: req.body.day,
+    beginHour: req.body.beginHour,
+    endHour: req.body.endHour,
+
+    ref_parc: req.body.ref_parc,
+  })
+    .then((calendrier) => {
+      const message = "Le calendrier a été créé avec succès";
+      return res.json({ message, data: calendrier });
+    })
+    .catch((e) => {
+      const message =
+        "Le calendrier n'a pas pu être créé. Réessayez dans quelques instants";
+      return res.status(500).json({ message, data: e });
+    });
+};
+
+exports.deleteCalendar = async (req, res) => {
+  const id = req.params.id;
 
   try {
-    await ParcsCalendar.create({
-      date,
-      beginHour,
-      endHour,
-      ref_parc,
+    await ParcsCalendar.destroy({
+      where: {
+        id: id,
+      },
     }).then((data) => {
       res.status(200).json({ message: "Succès", data });
     });

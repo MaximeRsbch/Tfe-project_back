@@ -2,8 +2,8 @@ const { Article, CommentArticles } = require("../db/sequelize.js");
 const fs = require("fs");
 
 exports.createArticle = (req, res, next) => {
-  if (req.userRole !== "admin" || req.userRole !== "modoParc") {
-    const message = "Vous n'avez pas les droits pour créer un article";
+  if (req.userRole !== "admin" && req.userRole !== "modoParc") {
+    const message = "Vous n'avez pas les droits pour créer une attraction";
     return res.status(401).json({ message });
   }
 
