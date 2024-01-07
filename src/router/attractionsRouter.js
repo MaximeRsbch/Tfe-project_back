@@ -49,7 +49,9 @@ router.get("/", attractionCtrl.findAllAttractions);
 
 router.get("/:id/all", attractionCtrl.findAttraction);
 
-router.put("/:id", attractionCtrl.updateAttraction);
+router.get("/:id", attractionCtrl.findAttractionById);
+
+router.put("/:id", upload.single("img"), attractionCtrl.updateAttraction);
 
 router.delete("/:id", attractionCtrl.deleteAttraction);
 

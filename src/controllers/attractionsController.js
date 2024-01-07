@@ -171,6 +171,40 @@ exports.findAllAttractions = (req, res, next) => {
     });
 };
 
+exports.findAttractionById = (req, res, next) => {
+  const id = req.params.id;
+
+  Attraction.findOne({
+    where: {
+      id: id,
+    },
+    include: [
+      {
+        model: imgAttr,
+      },
+      {
+        model: Review,
+      },
+      {
+        model: CommentAttr,
+      },
+      {
+        model: Favoris,
+      },
+      {
+        model: Parcs,
+      },
+    ],
+  })
+    .then((attr) => {
+      res.json(attr);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+};
+
 exports.updateAttraction = (req, res, next) => {
   if (req.userRole !== "admin" && req.userRole !== "modoParc") {
     const message = "Vous n'avez pas les droits pour modifier une attraction";
@@ -204,6 +238,7 @@ exports.updateAttraction = (req, res, next) => {
   )
     .then((attr) => {
       res.json(attr);
+      console.log(attr);
     })
     .catch((err) => {
       console.log(err);
