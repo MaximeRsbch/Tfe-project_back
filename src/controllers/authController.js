@@ -86,7 +86,7 @@ exports.register = (req, res, next) => {
                 to: user.email,
                 subject: "Vérification de votre adresse mail WatchUrPark",
                 text: `Bonjour, ${user.username}. Veuillez vérifier votre adresse mail en cliquant sur le lien suivant :
-                http://localhost:3000/api/auth/verify/${user.id}/${token.token}`,
+                http://192.168.0.205:3000/api/auth/verify/${user.id}/${token.token}`,
               })
                 .then((result) => {
                   const message = `L'utilisateur a été créé avec succès`;

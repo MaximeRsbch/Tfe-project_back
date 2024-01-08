@@ -25,7 +25,7 @@ const InfoModel = require("../models/info.js");
 const ModoParcModel = require("../models/modoParc.js");
 const ModoModel = require("../models/modo.js");
 
-const sequelize = new Sequelize("tfe", "root", "", {
+const sequelize = new Sequelize("tfe", "root", "root", {
   host: "localhost",
   dialect: "mariadb",
   dialectOptions: {
