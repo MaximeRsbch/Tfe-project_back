@@ -9,7 +9,7 @@ const app = express();
 const port = 3306;
 
 const RateLimit = require("express-rate-limit");
-const limiter = new RateLimit({
+const limiter = RateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
   max: 20, // limit each IP to 100 requests per windowMs
 });
