@@ -32,6 +32,12 @@ const sequelize = new Sequelize("tfe", "root", "root", {
     timezone: "Etc/GMT-2",
   },
   logging: false,
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000,
+  },
 });
 
 const User = UserModel(sequelize, DataTypes);
