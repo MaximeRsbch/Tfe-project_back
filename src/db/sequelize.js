@@ -26,7 +26,7 @@ const ModoParcModel = require("../models/modoParc.js");
 const ModoModel = require("../models/modo.js");
 
 const sequelize = new Sequelize("tfe", "root", "root", {
-  host: "127.0.0.1",
+  host: "localhost",
   dialect: "mariadb",
   dialectOptions: {
     timezone: "Etc/GMT-2",
