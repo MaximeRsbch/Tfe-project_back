@@ -25,19 +25,13 @@ const InfoModel = require("../models/info.js");
 const ModoParcModel = require("../models/modoParc.js");
 const ModoModel = require("../models/modo.js");
 
-const sequelize = new Sequelize("tfe", "root", "root", {
+const sequelize = new Sequelize("tfe", "root", "", {
   host: "localhost",
   dialect: "mariadb",
   dialectOptions: {
     timezone: "Etc/GMT-2",
   },
   logging: false,
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000,
-  },
 });
 
 const User = UserModel(sequelize, DataTypes);

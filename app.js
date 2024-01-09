@@ -6,12 +6,12 @@ const cors = require("cors");
 const path = require("path");
 
 const app = express();
-const port = 3306;
+const port = 3000;
 
 const RateLimit = require("express-rate-limit");
 const limiter = RateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
-  max: 20, // limit each IP to 100 requests per windowMs
+  max: 20,
 });
 
 const throughMiddleware = require("./src/middlewares/TroughMiddleware.js");
@@ -53,6 +53,7 @@ const corsConf = {
 };
 
 app
+
   .use(limiter)
   .use(bodyParser.json())
   .use(cors(corsConf))
