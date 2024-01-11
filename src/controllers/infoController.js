@@ -25,26 +25,36 @@ exports.getAllInfo = (req, res, next) => {
 
 exports.createInfo = (req, res, next) => {
   if (req.userRole !== "admin" && req.userRole !== "modoParc") {
-    const message = "Vous n'avez pas les droits pour créer une info";
+    const message = "Vous n'avez pas les droits pour créer une attraction";
     return res.status(401).json({ message });
   }
 
-  const latitude = req.body.latitude;
-  const longitude = req.body.longitude;
   const ref_parc = req.body.ref_parc;
-
-  Info.create({
-    latitude: latitude,
-    longitude: longitude,
-    ref_parc: ref_parc,
+  Info.findOne({
+    where: {
+      id: ref_parc,
+    },
   })
-    .then((info) => {
-      const message = "L'info a été créée avec succès";
-      return res.json({ message, data: info });
+    .then((attr) => {
+      if (attr) {
+        res.status(500).json({ message: "Info déjà existante" });
+      } else {
+        Info.create({
+          latitude: req.body.latitude,
+          longitude: req.body.longitude,
+          ref_parc: req.body.ref_parc,
+        })
+          .then((attr) => {
+            res.status(201).json(attr);
+          })
+          .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+          });
+      }
     })
     .catch((error) => {
-      const message =
-        "L'info n'a pas pu être créée. Réessayez dans quelques instants";
-      return res.json({ message, data: error });
+      res.status(500).json({ error });
+      console.log(error);
     });
 };

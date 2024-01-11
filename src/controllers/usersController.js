@@ -1,20 +1,36 @@
-const { User, Token, Favoris } = require("../db/sequelize");
+const { User, Token, Favoris, Modo, ModoParc } = require("../db/sequelize");
 
 exports.deleteUser = (req, res, next) => {
-  if (req.userRole !== "admin" || req.userRole !== "modo") {
-    const message = "Vous n'avez pas les droits pour supprimer un utilisateurs";
-    return res.status(401).json({ message });
-  }
   Token.destroy({ where: { ref_user: req.params.id } })
     .then((_) => {
-      User.destroy({
-        where: {
-          id: req.params.id,
-        },
-      })
-        .then((user) => {
-          const message = "L'utilisateur a bien été supprimé";
-          return res.json({ message, data: user });
+      Modo.destroy({ where: { ref_user: req.params.id } })
+        .then((_) => {
+          ModoParc.destroy({ where: { ref_user: req.params.id } })
+            .then((_) => {
+              Favoris.destroy({ where: { ref_user: req.params.id } })
+                .then((_) => {
+                  User.destroy({ where: { id: req.params.id } })
+                    .then((_) => {
+                      const message = "L'utilisateur a bien été supprimé";
+                      return res.json({ message, data: _ });
+                    })
+                    .catch((error) => {
+                      const message =
+                        "L'utilisateur n'a pas pu être supprimé. Réessayez dans quelques instants";
+                      return res.json({ message, data: error });
+                    });
+                })
+                .catch((error) => {
+                  const message =
+                    "L'utilisateur n'a pas pu être supprimé. Réessayez dans quelques instants";
+                  return res.json({ message, data: error });
+                });
+            })
+            .catch((error) => {
+              const message =
+                "L'utilisateur n'a pas pu être supprimé. Réessayez dans quelques instants";
+              return res.json({ message, data: error });
+            });
         })
         .catch((error) => {
           const message =

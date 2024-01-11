@@ -11,7 +11,7 @@ const port = 3000;
 const RateLimit = require("express-rate-limit");
 const limiter = RateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
-  max: 20,
+  max: 100,
 });
 
 const throughMiddleware = require("./src/middlewares/TroughMiddleware.js");
@@ -54,9 +54,9 @@ const corsConf = {
 
 app
 
-  .use(limiter)
   .use(bodyParser.json())
   .use(cors(corsConf))
+  .use(limiter)
   .use("/public", express.static("public"))
   .use("/api", throughMiddleware.throughMiddleware)
   .use("/api/queuetime", queuetimeRouter) // à delete

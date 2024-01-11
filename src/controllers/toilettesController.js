@@ -39,15 +39,10 @@ exports.createToilettes = (req, res, next) => {
     return res.status(401).json({ message });
   }
 
-  const id = req.body.id;
-  const latitude = req.body.latitude;
-  const longitude = req.body.longitude;
-
-  const parc = req.body.parc;
-
+  const ref_parc = req.body.ref_parc;
   Toilettes.findOne({
     where: {
-      id: id,
+      id: ref_parc,
     },
   })
     .then((attr) => {
@@ -55,10 +50,9 @@ exports.createToilettes = (req, res, next) => {
         res.status(500).json({ message: "Toilettes déjà existante" });
       } else {
         Toilettes.create({
-          id: id,
-          latitude: latitude,
-          longitude: longitude,
-          ref_parc: parc,
+          latitude: req.body.latitude,
+          longitude: req.body.longitude,
+          ref_parc: req.body.ref_parc,
         })
           .then((attr) => {
             res.status(201).json(attr);
@@ -71,6 +65,7 @@ exports.createToilettes = (req, res, next) => {
     })
     .catch((error) => {
       res.status(500).json({ error });
+      console.log(error);
     });
 };
 
