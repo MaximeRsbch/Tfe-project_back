@@ -58,3 +58,22 @@ exports.createInfo = (req, res, next) => {
       console.log(error);
     });
 };
+
+exports.deleteInfo = (req, res, next) => {
+  if (req.userRole !== "admin" && req.userRole !== "modoParc") {
+    const message = "Vous n'avez pas les droits pour supprimer une attraction";
+    return res.status(401).json({ message });
+  }
+
+  const id = req.params.id;
+  Info.destroy({
+    where: { id: id },
+  })
+    .then((attr) => {
+      res.status(200).json({ message: "info supprimée" });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+};
