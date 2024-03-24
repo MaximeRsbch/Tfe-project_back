@@ -10,4 +10,6 @@ router.put("/:id", reviewCtrl.updateReview);
 
 router.get("/:id", reviewCtrl.findAllReviews);
 
+router.get("/user/:id", reviewCtrl.findAllReviewsByUser);
+
 module.exports = router;

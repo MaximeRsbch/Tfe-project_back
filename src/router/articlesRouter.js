@@ -45,7 +45,9 @@ router.delete("/:id", articlesCtrl.deleteArticle);
 
 router.get("/:id?", articlesCtrl.getArticles);
 
-router.get("/all/:id", articlesCtrl.getAllArticles);
+router.get("/parc/:id", articlesCtrl.getArticlesByParc);
+
+router.get("/search/:title", articlesCtrl.searchArticles);
 
 router.put("/:id", upload.single("img"), articlesCtrl.updateArticle);
 

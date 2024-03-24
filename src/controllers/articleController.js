@@ -1,4 +1,4 @@
-const { Article, CommentArticles } = require("../db/sequelize.js");
+const { Article, CommentArticles, Parcs } = require("../db/sequelize.js");
 const fs = require("fs");
 
 exports.createArticle = (req, res, next) => {
@@ -143,7 +143,7 @@ exports.getArticles = (req, res, next) => {
   }
 };
 
-exports.getAllArticles = (req, res, next) => {
+exports.getArticlesByParc = (req, res, next) => {
   const id = req.params.id;
 
   if (id) {
@@ -169,4 +169,19 @@ exports.getAllArticles = (req, res, next) => {
         return res.json({ message, data: error });
       });
   }
+};
+
+exports.searchArticles = (req, res, next) => {
+  const title = req.params.title;
+
+  Article.findAll({ where: { title: title } })
+    .then((articles) => {
+      const message = "La liste des articles a été récupérée avec succès";
+      return res.json({ message, data: articles });
+    })
+    .catch((error) => {
+      const message =
+        "La liste des articles n'a pas pu être récupérée. Réessayez dans quelques instants";
+      return res.json({ message, data: error });
+    });
 };
