@@ -43,12 +43,8 @@ router.post("/", upload.single("img"), articlesCtrl.createArticle);
 
 router.delete("/:id", articlesCtrl.deleteArticle);
 
-router.get("/:id?", articlesCtrl.getArticles);
-
-router.get("/parc/:id", articlesCtrl.getArticlesByParc);
-
-router.get("/search/:title", articlesCtrl.searchArticles);
-
 router.put("/:id", upload.single("img"), articlesCtrl.updateArticle);
+
+router.get("/", articlesCtrl.getAllArticles);
 
 module.exports = router;

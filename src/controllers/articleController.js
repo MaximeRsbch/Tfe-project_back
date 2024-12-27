@@ -112,76 +112,21 @@ exports.updateArticle = (req, res, next) => {
     });
 };
 
-exports.getArticles = (req, res, next) => {
-  const id = req.params.id;
-
-  if (id) {
-    Article.findOne({ where: { id: id } }).then((article) => {
-      CommentArticles.findAll({ where: { ref_article: id } })
-        .then((comments) => {
-          article.comments = comments;
-          const message = "L'article a été récupéré avec succès";
-          return res.json({ message, data: article });
-        })
-        .catch((error) => {
-          const message =
-            "La liste des commentaires n'a pas pu être récupérée. Réessayez dans quelques instants";
-          return res.json({ message, data: error });
-        });
-    });
-  } else {
-    Article.findAll()
-      .then((articles) => {
-        const message = "La liste des articles a été récupérée avec succès";
-        return res.json({ message, data: articles });
-      })
-      .catch((error) => {
-        const message =
-          "La liste des articles n'a pas pu être récupérée. Réessayez dans quelques instants";
-        return res.json({ message, data: error });
-      });
-  }
-};
-
-exports.getArticlesByParc = (req, res, next) => {
-  const id = req.params.id;
-
-  if (id) {
-    Article.findAll({ where: { ref_parc: id } })
-      .then((articles) => {
-        const message = "La liste des articles a été récupérée avec succès";
-        return res.json({ message, data: articles });
-      })
-      .catch((error) => {
-        const message =
-          "La liste des articles n'a pas pu être récupérée. Réessayez dans quelques instants";
-        return res.json({ message, data: error });
-      });
-  } else {
-    Article.findAll()
-      .then((articles) => {
-        const message = "La liste des articles a été récupérée avec succès";
-        return res.json({ message, data: articles });
-      })
-      .catch((error) => {
-        const message =
-          "La liste des articles n'a pas pu être récupérée. Réessayez dans quelques instants";
-        return res.json({ message, data: error });
-      });
-  }
-};
-
-exports.searchArticles = (req, res, next) => {
-  const title = req.params.title;
-
-  Article.findAll({ where: { title: title } })
+exports.getAllArticles = (req, res, next) => {
+  Article.findAll({
+    include: [
+      {
+        model: CommentArticles,
+      },
+    ],
+  })
     .then((articles) => {
-      const message = "La liste des articles a été récupérée avec succès";
+      const message = "La liste des articles a bien été récupérée";
       return res.json({ message, data: articles });
     })
     .catch((error) => {
       const message =
         "La liste des articles n'a pas pu être récupérée. Réessayez dans quelques instants";
-      return res.json({ message, data: error });
+      return res.status(500).json({ message, data: error });
     });
 };

@@ -1,4 +1,4 @@
-const { Review, User, Attraction } = require("../db/sequelize");
+const { Review, User, Attraction, Parcs } = require("../db/sequelize");
 
 exports.addReview = async (req, res) => {
   const id_user = req.body.id_user;

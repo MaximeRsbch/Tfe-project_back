@@ -1,10 +1,10 @@
-const { Favoris } = require("../db/sequelize.js");
+const { Favoris, Attraction } = require("../db/sequelize.js");
 
 exports.getAllFavoris = (req, res, next) => {
   const id = req.params.id;
 
   if (id) {
-    Favoris.findAll({ where: { ref_user: id } })
+    Favoris.findAll({ where: { ref_user: id }, include: Attraction })
       .then((favoris) => {
         const message = "La liste des favoris a été récupérée avec succès";
         return res.json({ message, data: favoris });
