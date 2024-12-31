@@ -47,4 +47,6 @@ router.put("/:id", upload.single("img"), articlesCtrl.updateArticle);
 
 router.get("/", articlesCtrl.getAllArticles);
 
+router.get("/:id", articlesCtrl.getArticleById);
+
 module.exports = router;

@@ -130,3 +130,23 @@ exports.getAllArticles = (req, res, next) => {
       return res.status(500).json({ message, data: error });
     });
 };
+
+exports.getArticleById = (req, res, next) => {
+  Article.findOne({
+    where: { id: req.params.id },
+    include: [
+      {
+        model: CommentArticles,
+      },
+    ],
+  })
+    .then((article) => {
+      const message = "L'article a bien été récupéré";
+      return res.json({ message, data: article });
+    })
+    .catch((error) => {
+      const message =
+        "L'article n'a pas pu être récupéré. Réessayez dans quelques instants";
+      return res.status(500).json({ message, data: error });
+    });
+};
