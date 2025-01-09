@@ -1,29 +1,31 @@
 //importing modules
 const nodemailer = require("nodemailer");
 
-//function to send email to the user
-module.exports.sendingMail = async ({ to, subject, text }) => {
-  const from = process.env.MAIL_USERNAME;
-  try {
-    let mailOptions = {
-      from,
-      to,
-      subject,
-      text,
-    };
+const sendMail = (email) => {
+  // Step 1
+  var Transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD,
+    },
+  });
 
-    const transporter = nodemailer.createTransport({
-      port: process.env.MAIL_PORT,
-      host: process.env.MAIL_SERVER,
-      auth: {
-        user: process.env.MAIL_USERNAME,
-        pass: process.env.MAIL_PASSWORD,
-      },
-      secure: true,
-    });
+  var mailOptions;
+  let sender = "WatchUrPark";
+  mailOptions = {
+    from: sender,
+    to: email,
+    subject: "Email Verification",
+    text: "Cliquer sur le lien pour vérifier votre email : <a href='http://localhost:3000/api/auth/verify/${user.id}/${token}'></a>",
+  };
 
-    return await transporter.sendMail(mailOptions);
-  } catch (error) {
-    console.log(error);
-  }
+  // Step 3
+  Transporter.sendMail(mailOptions, function (error, response) {
+    if (error) {
+      console.log("Error", error);
+    } else {
+      console.log("Email sent");
+    }
+  });
 };
