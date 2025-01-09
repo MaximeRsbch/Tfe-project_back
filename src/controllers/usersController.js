@@ -1,4 +1,5 @@
 const { User, Token, Favoris, Modo, ModoParc } = require("../db/sequelize");
+const fs = require("fs");
 
 exports.deleteUser = (req, res, next) => {
   Token.destroy({ where: { ref_user: req.params.id } })
@@ -110,13 +111,59 @@ exports.findUsersById = (req, res, next) => {
 };
 
 exports.modifyUser = (req, res, next) => {
-  User.update(req.body, {
-    where: { id: req.params.id },
-  })
-    .then((result) => {
-      res.status(200).json(result);
+  let profileImagePath = null;
+  let backgroundImagePath = null;
+
+  if (req.files && req.files.img) {
+    profileImagePath = req.files.img[0].path;
+  }
+
+  // Vérifier si l'image de fond est présente
+  if (req.files && req.files.background) {
+    backgroundImagePath = req.files.background[0].path;
+  }
+
+  User.findOne({ where: { id: req.params.id } })
+    .then((user) => {
+      if (
+        profileImagePath !== user.profileimg_url ||
+        backgroundImagePath !== user.backgroundimg_url
+      ) {
+        fs.unlink(__basedir + "/" + user.profileimg_url, (err) => {
+          if (err) {
+            const message =
+              "L'utilisateur n'a pas pu être modifié. Réessayez dans quelques instants";
+            return res.status(500).json({ message, data: err });
+          }
+        });
+        fs.unlink(__basedir + "/" + user.backgroundimg_url, (err) => {
+          if (err) {
+            const message =
+              "L'utilisateur n'a pas pu être modifié. Réessayez dans quelques instants";
+            return res.status(500).json({ message, data: err });
+          }
+        });
+      }
+      User.update(
+        {
+          body: req.body,
+          profileimg_url: profileImagePath,
+          backgroundimg_url: backgroundImagePath,
+        },
+        {
+          where: { id: req.params.id },
+        }
+      )
+        .then((result) => {
+          res.status(200).json(result);
+        })
+        .catch((err) => res.status(400).json(err));
     })
-    .catch((err) => res.status(400).json(err));
+    .catch((error) => {
+      const message =
+        "L'utilisateur n'a pas pu être modifié. Réessayez dans quelques instants";
+      return res.status(500).json({ message, data: error });
+    });
 };
 
 exports.muteUser = (req, res, next) => {

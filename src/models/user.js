@@ -32,5 +32,13 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
     },
+    profileimg_url: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    backgroundimg_url: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   });
 };
